@@ -49,7 +49,7 @@ for (const [name, viewport] of [["desktop", { width: 1440, height: 900 }], ["mob
     report.lightbox.closed = await page.locator("dialog[open]").count() === 0;
   }
   report.viewports[name] = { facts, axe, consoleErrors, pageErrors };
-  if (facts.scrollWidth > facts.viewport + 1 || facts.brokenImages.length || facts.galleryItems !== 9 || facts.unlabelledButtons || consoleErrors.length || pageErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
+  if (facts.scrollWidth > facts.viewport + 1 || facts.brokenImages.length || facts.galleryItems !== 12 || facts.unlabelledButtons || consoleErrors.length || pageErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
   await context.close();
 }
 if (!report.lightbox.opened || !report.lightbox.closed) failed = true;

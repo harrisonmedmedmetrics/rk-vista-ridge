@@ -10,7 +10,7 @@ Premium, property-specific industrial leasing experience for Vista Ridge in Kyle
 - Cinematic real-property hero and exterior film
 - Executive-approved facility facts and specialized capability story
 - Climate-controlled, temperature-controlled workroom, power and H4-readiness sections
-- Responsive real-property gallery with lightbox
+- Twelve-image documentary property gallery with lightbox
 - Regional Kyle / I-35 location context
 - RK Logistics credibility section sourced from the public corporate site
 - Validated tour-request flow with UTM/click-ID capture
@@ -49,7 +49,7 @@ See `.env.example` for configuration.
 
 ## Media provenance
 
-All facility media in `public/media` is derived from the real property footage supplied and authorized by RK executive leadership. `scripts/prepare_media.py` creates the optimized web derivatives, mobile crop, Open Graph image and exterior film. Internal regeneration requires an approved source map supplied through `RK_MEDIA_CONFIG`; that private mapping is intentionally excluded from this repository. Do not replace documentary property imagery with generated facility features.
+All facility media in `public/media` is derived from real property footage supplied and authorized by RK executive leadership or from RK's existing official property imagery. `scripts/prepare_media.py` creates the optimized web derivatives, mobile crop, Open Graph image and exterior film. Internal regeneration requires an approved source map supplied through `RK_MEDIA_CONFIG`; that private mapping is intentionally excluded from this repository. Do not replace documentary property imagery with generated facility features.
 
 ## Content boundaries
 

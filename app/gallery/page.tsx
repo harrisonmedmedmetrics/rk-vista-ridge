@@ -10,13 +10,13 @@ import { property, siteConfig } from "@/lib/property";
 
 export const metadata: Metadata = {
   title: "Property Gallery | Vista Ridge",
-  description: "Explore real exterior, loading, warehouse, storage and support-space photography from Vista Ridge in Kyle, Texas.",
+  description: "Explore twelve documentary exterior, loading, warehouse and support-space photographs from Vista Ridge in Kyle, Texas.",
   alternates: { canonical: "/gallery" },
   openGraph: {
     title: "Vista Ridge Property Gallery",
     description: "Real property photography from Vista Ridge by RK Logistics Group.",
     url: `${siteConfig.url}/gallery`,
-    images: [{ url: "/media/interior-wide.webp", width: 3200, height: 1800, alt: "Vista Ridge warehouse interior" }],
+    images: [{ url: "/media/official-rk-exterior.webp", width: 1920, height: 1080, alt: "Vista Ridge exterior overview" }],
   },
 };
 
@@ -26,7 +26,7 @@ export default function GalleryPage() {
       <SiteHeader />
       <main id="main" className="gallery-page">
         <section className="gallery-page-hero" aria-labelledby="gallery-page-title">
-          <Image src="/media/interior-wide.webp" alt="Vista Ridge warehouse interior" fill priority sizes="100vw" />
+          <Image src="/media/official-rk-exterior.webp" alt="Vista Ridge exterior overview" fill priority sizes="100vw" />
           <div className="gallery-page-scrim" aria-hidden="true" />
           <div className="site-container gallery-page-hero-content">
             <p>Vista Ridge · Real property photography</p>
@@ -38,8 +38,8 @@ export default function GalleryPage() {
           <div className="site-container">
             <div className="section-kicker"><span>01</span><p>Explore the facility</p></div>
             <div>
-              <h2>Nine views.<br />One operating environment.</h2>
-              <p>Move through exterior access, loading infrastructure, warehouse volume, racked storage and support space. Select any image for a full-size view.</p>
+              <h2>Twelve views.<br />One facility.</h2>
+              <p>Move through exterior arrival, loading infrastructure, warehouse volume, circulation and support space. Select any image for a full-size view.</p>
             </div>
           </div>
         </section>

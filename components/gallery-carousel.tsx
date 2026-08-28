@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ArrowRight, ArrowUpRight } from "@/components/icons";
 import { property } from "@/lib/property";
 
-const slides = [property.gallery[5], property.gallery[3], property.gallery[4]];
+const slides = [property.gallery[8], property.gallery[5], property.gallery[7]];
 
 export function GalleryCarousel() {
   const [active, setActive] = useState(0);
