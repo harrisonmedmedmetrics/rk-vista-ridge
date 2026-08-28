@@ -66,6 +66,11 @@ async function audit(name, viewport) {
       h1: document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim(),
       sectionCount: document.querySelectorAll("main section").length,
       imageCount: document.images.length,
+      specialtyGap: (() => {
+        const heading = document.querySelector("#specialty-title")?.getBoundingClientRect();
+        const card = document.querySelector(".specialty-card")?.getBoundingClientRect();
+        return heading && card ? Math.round(card.top - heading.bottom) : null;
+      })(),
       upscaledImages: [...document.images].map(img => {
         let deliveredWidth = img.naturalWidth;
         try { deliveredWidth = Number(new URL(img.currentSrc || img.src).searchParams.get("w")) || deliveredWidth; } catch {}
@@ -119,7 +124,7 @@ async function audit(name, viewport) {
   }
 
   report.viewports[name] = { viewport, facts, axe, consoleErrors, pageErrors, requestFailures };
-  if (facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
+  if (facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || (facts.specialtyGap !== null && facts.specialtyGap < 24) || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
   await context.close();
 }
 
@@ -167,5 +172,5 @@ await context.close();
 await browser.close();
 
 await fs.writeFile(path.join(outDir, "qa-report.json"), JSON.stringify(report, null, 2));
-console.log(JSON.stringify({ failed, report: path.join(outDir, "qa-report.json"), viewports: Object.keys(report.viewports), form: report.form, carousel: report.carousel, summaries: Object.fromEntries(Object.entries(report.viewports).map(([k,v]) => [k, { scrollWidth: v.facts.scrollWidth, viewport: v.facts.viewport, brokenImages: v.facts.brokenImages.length, upscaledImages: v.facts.upscaledImages.length, axeViolations: v.axe.length, consoleErrors: v.consoleErrors.length, pageErrors: v.pageErrors.length, video: `${v.facts.videoWidth}/${v.facts.videoReadyState}`, lcp: Math.round(v.facts.vitals.lcp), cls: Number(v.facts.vitals.cls.toFixed(4)) }])) }, null, 2));
+console.log(JSON.stringify({ failed, report: path.join(outDir, "qa-report.json"), viewports: Object.keys(report.viewports), form: report.form, carousel: report.carousel, summaries: Object.fromEntries(Object.entries(report.viewports).map(([k,v]) => [k, { scrollWidth: v.facts.scrollWidth, viewport: v.facts.viewport, specialtyGap: v.facts.specialtyGap, brokenImages: v.facts.brokenImages.length, upscaledImages: v.facts.upscaledImages.length, axeViolations: v.axe.length, consoleErrors: v.consoleErrors.length, pageErrors: v.pageErrors.length, video: `${v.facts.videoWidth}/${v.facts.videoReadyState}`, lcp: Math.round(v.facts.vitals.lcp), cls: Number(v.facts.vitals.cls.toFixed(4)) }])) }, null, 2));
 process.exit(failed ? 1 : 0);

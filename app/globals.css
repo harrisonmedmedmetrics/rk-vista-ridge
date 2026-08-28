@@ -171,9 +171,10 @@
   .detail-note { margin-top: 1.8rem; color: rgba(255,255,255,.52); font-size: .82rem; line-height: 1.65; }
 
   .specialty-section { padding: clamp(5.5rem,8vw,8rem) 0; background: var(--paper); color: var(--ink); }
-  .specialty-grid { display: grid; grid-template-columns: minmax(0,.88fr) minmax(520px,1.12fr); gap: clamp(3rem,7vw,7rem); align-items: center; }
+  .specialty-grid { display: grid; grid-template-columns: 1fr; gap: clamp(3rem,5vw,5.5rem); align-items: start; }
+  .specialty-grid > .reveal:first-child { max-width: 800px; }
   .specialty-grid h2 { max-width: 660px; font-size: clamp(3rem,5vw,5.8rem); }
-  .specialty-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .specialty-cards { width: min(100%,1120px); display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .specialty-card { min-height: 330px; position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(1.5rem,2.6vw,2.35rem); border: 1px solid #b8c9a4; background: var(--green-pale); color: var(--forest); }
   .specialty-card-power { background: var(--forest); }
   .specialty-card-power { border-color: var(--forest); color: white; }
@@ -340,12 +341,6 @@
 }
 
 @layer responsive {
-  @media (max-width: 1280px) {
-    .specialty-grid { grid-template-columns: 1fr; align-items: start; }
-    .specialty-grid > .reveal:first-child { max-width: 780px; }
-    .specialty-cards { width: min(100%,920px); }
-  }
-
   @media (max-width: 1080px) {
     .desktop-nav { display: none; }
     .header-inner { grid-template-columns: 1fr auto auto; }
