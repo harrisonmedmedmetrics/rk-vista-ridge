@@ -1,0 +1,102 @@
+export const siteConfig = {
+  name: "Vista Ridge | RK Logistics Group",
+  shortName: "Vista Ridge",
+  description:
+    "A 208,010-square-foot specialized industrial facility in Kyle, Texas, with climate-controlled capacity, heavy power, secured lab space and tour availability.",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://rk-vista-ridge.vercel.app",
+  tourEmail: process.env.TOUR_REQUEST_EMAIL || "info@rklogisticsgroup.com",
+  corporateUrl: "https://rklogisticsgroup.com",
+  privacyUrl: "https://rklogisticsgroup.com/data-privacy-statement/",
+};
+
+export const property = {
+  id: "vista-ridge",
+  name: "Vista Ridge",
+  market: "Kyle, Texas",
+  corridor: "Texas Innovation Corridor",
+  headline: "Specialized industrial capacity, built for exacting operations.",
+  summary:
+    "A 208,010-square-foot facility combining substantial warehouse scale with controlled environments, heavy power and specialized support space in the I-35 corridor between Austin and San Antonio.",
+  primaryCta: "Request a Tour",
+  stats: [
+    { value: "208,010", unit: "SF", label: "Total facility" },
+    { value: "60,000", unit: "SF", label: "Climate-controlled" },
+    { value: "3,250", unit: "SF", label: "Secured lab" },
+    { value: "16", unit: "× 480V", label: "Internal power outlets" },
+  ],
+  capabilities: [
+    {
+      eyebrow: "Controlled environment",
+      title: "60,000 SF under precise environmental control",
+      copy:
+        "A firewall-separated, insulated area with full HVAC control for temperature and humidity, designed for operations where environmental consistency matters.",
+    },
+    {
+      eyebrow: "Integrated cold storage",
+      title: "Permanent walk-in refrigerator / freezer",
+      copy:
+        "A dedicated 360-square-foot walk-in refrigerator and freezer is installed within the climate-controlled footprint.",
+    },
+    {
+      eyebrow: "Specialized support",
+      title: "Secured lab space on site",
+      copy:
+        "A 3,250-square-foot secured laboratory creates a dedicated environment for controlled workflows, evaluation and technical support.",
+    },
+    {
+      eyebrow: "Power infrastructure",
+      title: "Heavy power where the work happens",
+      copy:
+        "Sixteen internal 480V outlets support demanding equipment and flexible industrial operating requirements across the building.",
+    },
+  ],
+  h4: {
+    title: "Current H4 storage approval",
+    copy:
+      "The facility currently holds H4 storage approval based on toxic and corrosive classifications stored on site.",
+    caveat:
+      "Other hazardous-material classifications may require additional infrastructure, permitting and operational approval. Capability should be confirmed for each proposed use.",
+  },
+  location: {
+    lat: 29.9892928,
+    lon: -97.8772103,
+    title: "Positioned between Austin and San Antonio",
+    copy:
+      "Kyle sits in the heart of the I-35 corridor, connecting Central Texas' fast-growing employment, manufacturing and distribution markets.",
+    distances: [
+      { label: "San Marcos Municipal Airport", value: "12 mi" },
+      { label: "Austin-Bergstrom International", value: "25 mi" },
+      { label: "San Antonio International", value: "52 mi" },
+    ],
+    sourceUrl: "https://kyleed.com/choose-kyle/transportation-and-location",
+  },
+  gallery: [
+    { src: "/media/hero.webp", alt: "Vista Ridge front entrance and office façade", label: "Arrival" },
+    { src: "/media/interior-wide.webp", alt: "Wide view across the Vista Ridge warehouse floor", label: "Warehouse floor" },
+    { src: "/media/interior-aisle-alt.webp", alt: "Long interior warehouse aisle at Vista Ridge", label: "Storage depth" },
+    { src: "/media/dock.webp", alt: "Interior loading door and staging area at Vista Ridge", label: "Loading" },
+    { src: "/media/loading.webp", alt: "Exterior loading elevation and truck court at Vista Ridge", label: "Truck access" },
+    { src: "/media/office.webp", alt: "Office and support area inside Vista Ridge", label: "Support space" },
+  ],
+} as const;
+
+export type TourRequest = {
+  name: string;
+  company: string;
+  email: string;
+  phone?: string;
+  interest: "lease" | "operated-logistics" | "unsure";
+  spaceNeed?: string;
+  timeline?: string;
+  message?: string;
+  consent: boolean;
+  website?: string;
+  propertyId: string;
+  pageVersion: string;
+  source?: string;
+  medium?: string;
+  campaign?: string;
+  term?: string;
+  content?: string;
+  clickId?: string;
+};
