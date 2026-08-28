@@ -7,10 +7,10 @@ import { GalleryCarousel } from "@/components/gallery-carousel";
 import { CorridorMap } from "@/components/corridor-map";
 import { TourRequestForm } from "@/components/tour-request-form";
 import { MobileTourBar } from "@/components/mobile-tour-bar";
-import { ArrowRight, ArrowUpRight, Bolt, Flask, MapPin, Snowflake, Thermometer } from "@/components/icons";
+import { ArrowRight, ArrowUpRight, Bolt, MapPin, Snowflake, Thermometer } from "@/components/icons";
 import { property, siteConfig } from "@/lib/property";
 
-const capabilityIcons = [Thermometer, Snowflake, Flask, Bolt];
+const capabilityIcons = [Thermometer, Snowflake, Thermometer, Bolt];
 
 export default function Home() {
   const jsonLd = {
@@ -144,11 +144,11 @@ export default function Home() {
             </Reveal>
             <div className="specialty-cards">
               <Reveal delay={80}>
-                <article className="specialty-card specialty-card-lab">
-                  <span className="card-number">01</span><Flask size={30} />
+                <article className="specialty-card specialty-card-workroom">
+                  <span className="card-number">01</span><Thermometer size={30} />
                   <p className="card-value">3,250 <small>SF</small></p>
-                  <h3>Secured laboratory</h3>
-                  <p>A dedicated technical environment for controlled workflows, evaluation and support.</p>
+                  <h3>Dedicated temperature-controlled workroom</h3>
+                  <p>A dedicated, temperature-controlled workroom for controlled workflows, evaluation and support.</p>
                 </article>
               </Reveal>
               <Reveal delay={140}>

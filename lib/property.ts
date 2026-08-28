@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Vista Ridge | RK Logistics Group",
   shortName: "Vista Ridge",
   description:
-    "A 208,010-square-foot specialized industrial facility in Kyle, Texas, with climate-controlled capacity, heavy power, secured lab space and tour availability.",
+    "A 208,010-square-foot specialized industrial facility in Kyle, Texas, with climate-controlled capacity, heavy power, a dedicated temperature-controlled workroom and tour availability.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://rk-vista-ridge.vercel.app",
   tourEmail: process.env.TOUR_REQUEST_EMAIL || "info@rklogisticsgroup.com",
   corporateUrl: "https://rklogisticsgroup.com",
@@ -21,7 +21,7 @@ export const property = {
   stats: [
     { value: "208,010", unit: "SF", label: "Total facility" },
     { value: "60,000", unit: "SF", label: "Climate-controlled" },
-    { value: "3,250", unit: "SF", label: "Secured lab" },
+    { value: "3,250", unit: "SF", label: "Dedicated workroom" },
     { value: "16", unit: "× 480V", label: "Internal power outlets" },
   ],
   capabilities: [
@@ -38,10 +38,10 @@ export const property = {
         "A dedicated 360-square-foot walk-in refrigerator and freezer is installed within the climate-controlled footprint.",
     },
     {
-      eyebrow: "Specialized support",
-      title: "Secured lab space on site",
+      eyebrow: "Dedicated workroom",
+      title: "Temperature-controlled workroom on site",
       copy:
-        "A 3,250-square-foot secured laboratory creates a dedicated environment for controlled workflows, evaluation and technical support.",
+        "A 3,250-square-foot dedicated, temperature-controlled workroom supports controlled workflows, evaluation and technical support.",
     },
     {
       eyebrow: "Power infrastructure",

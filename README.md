@@ -9,7 +9,7 @@ Premium, property-specific industrial leasing experience for Vista Ridge in Kyle
 
 - Cinematic real-property hero and exterior film
 - Executive-approved facility facts and specialized capability story
-- Climate-controlled, laboratory, power and H4-readiness sections
+- Climate-controlled, temperature-controlled workroom, power and H4-readiness sections
 - Responsive real-property gallery with lightbox
 - Regional Kyle / I-35 location context
 - RK Logistics credibility section sourced from the public corporate site
