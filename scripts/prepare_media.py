@@ -2,15 +2,15 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 
-ROOT = Path('/home/nemo/projects/rk-vista-ridge')
-CANDIDATES = Path('/home/nemo/rk-vista-ridge-private/candidates/recommended-interval-stills')
+ROOT = Path(__file__).resolve().parents[1]
 MEDIA = ROOT / 'public/media'
 BRAND = ROOT / 'public/brand'
 DOCS = ROOT / 'docs'
@@ -18,19 +18,17 @@ MEDIA.mkdir(parents=True, exist_ok=True)
 BRAND.mkdir(parents=True, exist_ok=True)
 DOCS.mkdir(parents=True, exist_ok=True)
 
-SOURCES = {
-    'hero': 'candidate-104-00-17-10.jpg',
-    'facade': 'candidate-099-00-16-20.jpg',
-    'arrival': 'candidate-098-00-16-10.jpg',
-    'truck-court': 'candidate-100-00-16-30.jpg',
-    'loading': 'candidate-101-00-16-40.jpg',
-    'dock': 'candidate-092-00-15-10.jpg',
-    'interior-wide': 'candidate-022-00-03-30.jpg',
-    'interior-volume': 'candidate-035-00-05-40.jpg',
-    'interior-aisle': 'candidate-065-00-10-40.jpg',
-    'interior-aisle-alt': 'candidate-066-00-10-50.jpg',
-    'office': 'candidate-095-00-15-40.jpg',
-}
+config_path = os.environ.get('RK_MEDIA_CONFIG')
+if not config_path:
+    raise RuntimeError(
+        'RK_MEDIA_CONFIG must point to a private JSON config containing '
+        'candidate_dir, dark_logo, light_logo, and the approved source mapping.'
+    )
+private_config = json.loads(Path(config_path).read_text())
+CANDIDATES = Path(private_config['candidate_dir'])
+DARK_LOGO = Path(private_config['dark_logo'])
+LIGHT_LOGO = Path(private_config['light_logo'])
+SOURCES = private_config['sources']
 
 
 def open_rgb(name: str) -> Image.Image:
@@ -40,11 +38,19 @@ def open_rgb(name: str) -> Image.Image:
     return Image.open(path).convert('RGB')
 
 
-def save_webp(name: str, max_width: int = 1920, quality: int = 86) -> Path:
+def enhance_documentary(im: Image.Image) -> Image.Image:
+    """Conservative clarity pass only: no generative pixels or facility changes."""
+    im = ImageEnhance.Contrast(im).enhance(1.035)
+    im = im.filter(ImageFilter.UnsharpMask(radius=1.35, percent=125, threshold=3))
+    return im
+
+
+def save_webp(name: str, target_width: int = 1920, quality: int = 89) -> Path:
     im = open_rgb(name)
-    if im.width > max_width:
-        h = round(im.height * max_width / im.width)
-        im = im.resize((max_width, h), Image.Resampling.LANCZOS)
+    if im.width != target_width:
+        h = round(im.height * target_width / im.width)
+        im = im.resize((target_width, h), Image.Resampling.LANCZOS)
+    im = enhance_documentary(im)
     out = MEDIA / f'{name}.webp'
     im.save(out, 'WEBP', quality=quality, method=6)
     return out
@@ -54,6 +60,7 @@ def make_hero_mobile() -> Path:
     im = open_rgb('hero')
     cropped = ImageOps.fit(im, (1080, 1350), method=Image.Resampling.LANCZOS,
                            centering=(0.68, 0.48))
+    cropped = enhance_documentary(cropped)
     out = MEDIA / 'hero-mobile.webp'
     cropped.save(out, 'WEBP', quality=88, method=6)
     return out
@@ -95,7 +102,7 @@ def make_og() -> Path:
 
 
 def make_video() -> Path:
-    images = [MEDIA / f'{name}.webp' for name in ['hero', 'loading', 'truck-court', 'hero']]
+    images = [MEDIA / f'{name}.webp' for name in ['loading', 'truck-court', 'facade', 'arrival']]
     for p in images:
         if not p.exists():
             raise FileNotFoundError(p)
@@ -130,23 +137,25 @@ def make_video() -> Path:
 
 def main() -> None:
     generated = []
+    large_media = {'hero', 'interior-wide', 'interior-volume', 'loading', 'office'}
     for name in SOURCES:
-        generated.append(save_webp(name))
+        generated.append(save_webp(name, target_width=3200 if name in large_media else 1920, quality=92 if name == 'hero' else 90 if name in large_media else 89))
     generated.append(make_hero_mobile())
     generated.append(make_og())
 
-    shutil.copy2('/home/nemo/projects/rk-ai/dashboard/public/rk-logo.png', BRAND / 'rk-logo.png')
-    shutil.copy2('/home/nemo/rk-ai-presentation/rk-logo-white.png', BRAND / 'rk-logo-white.png')
+    shutil.copy2(DARK_LOGO, BRAND / 'rk-logo.png')
+    shutil.copy2(LIGHT_LOGO, BRAND / 'rk-logo-white.png')
     generated += [BRAND / 'rk-logo.png', BRAND / 'rk-logo-white.png']
     generated.append(make_video())
 
     manifest = {
-        'sources': SOURCES,
+        'source_count': len(SOURCES),
+        'source_classes': ['exterior', 'loading', 'warehouse', 'support-space'],
         'generated': [
             {'path': str(p.relative_to(ROOT)), 'bytes': p.stat().st_size}
             for p in generated
         ],
-        'policy': 'All facility imagery derives from the executive-authorized real property footage.',
+        'policy': 'All facility imagery derives from executive-authorized real property footage. Private source filenames remain outside the public repository.',
     }
     (DOCS / 'media-manifest.json').write_text(json.dumps(manifest, indent=2))
     print(json.dumps({'generated_count': len(generated),

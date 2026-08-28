@@ -49,7 +49,7 @@ See `.env.example` for configuration.
 
 ## Media provenance
 
-All facility media in `public/media` is derived from the real property footage supplied and authorized by RK executive leadership. `scripts/prepare_media.py` creates the optimized web derivatives, mobile crop, Open Graph image and exterior film. Do not replace documentary property imagery with generated facility features.
+All facility media in `public/media` is derived from the real property footage supplied and authorized by RK executive leadership. `scripts/prepare_media.py` creates the optimized web derivatives, mobile crop, Open Graph image and exterior film. Internal regeneration requires an approved source map supplied through `RK_MEDIA_CONFIG`; that private mapping is intentionally excluded from this repository. Do not replace documentary property imagery with generated facility features.
 
 ## Content boundaries
 

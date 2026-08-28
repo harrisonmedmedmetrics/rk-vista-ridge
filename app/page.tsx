@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { Reveal } from "@/components/reveal";
 import { CinematicVideo } from "@/components/cinematic-video";
-import { PropertyGallery } from "@/components/property-gallery";
+import { GalleryCarousel } from "@/components/gallery-carousel";
+import { CorridorMap } from "@/components/corridor-map";
 import { TourRequestForm } from "@/components/tour-request-form";
 import { MobileTourBar } from "@/components/mobile-tour-bar";
 import { ArrowRight, ArrowUpRight, Bolt, Flask, MapPin, Snowflake, Thermometer } from "@/components/icons";
@@ -116,7 +118,7 @@ export default function Home() {
 
         <section className="controlled-section" aria-labelledby="controlled-title">
           <div className="controlled-media">
-            <Image src="/media/interior-wide.webp" alt="Wide view across the Vista Ridge warehouse floor" fill sizes="(max-width: 900px) 100vw, 58vw" />
+            <Image src="/media/interior-wide.webp" alt="Wide view across the Vista Ridge warehouse floor" fill sizes="(max-width: 1080px) 100vw, 58vw" />
             <div className="image-vignette" aria-hidden="true" />
             <span className="media-caption">Climate-controlled operations</span>
           </div>
@@ -187,19 +189,11 @@ export default function Home() {
               <div className="gallery-title-row"><h2 id="gallery-title">A facility you can understand before you arrive.</h2><p>Exterior access, warehouse volume, loading infrastructure and support space, shown through real property imagery.</p></div>
             </Reveal>
           </div>
-          <PropertyGallery />
+          <GalleryCarousel />
         </section>
 
         <section className="location-section" id="location" aria-labelledby="location-title">
-          <div className="location-map-wrap">
-            <iframe
-              title="Regional map of Kyle, Texas"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-97.985%2C29.91%2C-97.77%2C30.07&layer=mapnik&marker=29.9892928%2C-97.8772103"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-            <span>Regional context · Exact tour location shared with qualified prospects</span>
-          </div>
+          <div className="location-map-wrap"><CorridorMap /></div>
           <div className="location-content">
             <Reveal>
               <div className="section-kicker dark"><span>05</span><p>Location</p></div>
@@ -252,17 +246,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="site-container footer-main">
-          <a className="footer-brand" href="#top"><Image src="/brand/rk-logo-white.png" alt="RK Logistics Group" width={548} height={138} /></a>
-          <div className="footer-links"><a href="#facility">Facility</a><a href="#gallery">Gallery</a><a href="#location">Location</a><a href="#tour">Tour</a></div>
-          <div className="footer-contact"><p>Property inquiries</p><a href={`mailto:${siteConfig.tourEmail}`}>{siteConfig.tourEmail}</a><a href="tel:+18008217770">(800) 821-7770</a></div>
-        </div>
-        <div className="site-container footer-bottom">
-          <span>© {new Date().getFullYear()} RK Logistics Group, Inc.</span>
-          <div><a href={siteConfig.privacyUrl} target="_blank" rel="noreferrer">Data Privacy</a><a href="https://rklogisticsgroup.com/terms-and-conditions/" target="_blank" rel="noreferrer">Terms</a></div>
-        </div>
-      </footer>
+      <SiteFooter />
       <MobileTourBar />
       <script type="application/ld+json">{JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
     </>

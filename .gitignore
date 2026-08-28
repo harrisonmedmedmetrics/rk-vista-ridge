@@ -30,6 +30,11 @@ pnpm-debug.log*
 # local browser QA artifacts
 /qa/
 
+# local Python and editor intermediates
+__pycache__/
+*.py[cod]
+.hermes-tmp.*
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

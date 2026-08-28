@@ -1,65 +1,59 @@
 {
-  "sources": {
-    "hero": "candidate-104-00-17-10.jpg",
-    "facade": "candidate-099-00-16-20.jpg",
-    "arrival": "candidate-098-00-16-10.jpg",
-    "truck-court": "candidate-100-00-16-30.jpg",
-    "loading": "candidate-101-00-16-40.jpg",
-    "dock": "candidate-092-00-15-10.jpg",
-    "interior-wide": "candidate-022-00-03-30.jpg",
-    "interior-volume": "candidate-035-00-05-40.jpg",
-    "interior-aisle": "candidate-065-00-10-40.jpg",
-    "interior-aisle-alt": "candidate-066-00-10-50.jpg",
-    "office": "candidate-095-00-15-40.jpg"
-  },
+  "source_count": 11,
+  "source_classes": [
+    "exterior",
+    "loading",
+    "warehouse",
+    "support-space"
+  ],
   "generated": [
     {
       "path": "public/media/hero.webp",
-      "bytes": 140098
+      "bytes": 483862
     },
     {
       "path": "public/media/facade.webp",
-      "bytes": 209558
+      "bytes": 360816
     },
     {
       "path": "public/media/arrival.webp",
-      "bytes": 223966
+      "bytes": 394768
     },
     {
       "path": "public/media/truck-court.webp",
-      "bytes": 120920
+      "bytes": 198308
     },
     {
       "path": "public/media/loading.webp",
-      "bytes": 167024
+      "bytes": 507982
     },
     {
       "path": "public/media/dock.webp",
-      "bytes": 111242
+      "bytes": 184422
     },
     {
       "path": "public/media/interior-wide.webp",
-      "bytes": 217506
+      "bytes": 610408
     },
     {
       "path": "public/media/interior-volume.webp",
-      "bytes": 214694
+      "bytes": 597458
     },
     {
       "path": "public/media/interior-aisle.webp",
-      "bytes": 198970
+      "bytes": 320240
     },
     {
       "path": "public/media/interior-aisle-alt.webp",
-      "bytes": 241982
+      "bytes": 395588
     },
     {
       "path": "public/media/office.webp",
-      "bytes": 78784
+      "bytes": 232552
     },
     {
       "path": "public/media/hero-mobile.webp",
-      "bytes": 86954
+      "bytes": 125604
     },
     {
       "path": "public/media/vista-ridge-og.jpg",
@@ -75,8 +69,8 @@
     },
     {
       "path": "public/media/vista-ridge-exterior-film.mp4",
-      "bytes": 2325769
+      "bytes": 4114858
     }
   ],
-  "policy": "All facility imagery derives from the executive-authorized real property footage."
+  "policy": "All facility imagery derives from executive-authorized real property footage. Private source filenames remain outside the public repository."
 }

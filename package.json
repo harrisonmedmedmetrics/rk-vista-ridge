@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "qa": "node scripts/qa.mjs",
+    "qa:gallery": "node scripts/qa-gallery.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

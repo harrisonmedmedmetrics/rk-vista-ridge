@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { ArrowUpRight } from "@/components/icons";
 
 export function MobileTourBar() {
@@ -11,5 +12,6 @@ export function MobileTourBar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  return <a className={`mobile-tour-bar ${visible ? "is-visible" : ""}`} href="#tour" aria-hidden={!visible} tabIndex={visible ? 0 : -1}>Request a Tour <ArrowUpRight /></a>;
+  if (!visible) return null;
+  return <Link className="mobile-tour-bar is-visible" href="/#tour">Request a Tour <ArrowUpRight /></Link>;
 }

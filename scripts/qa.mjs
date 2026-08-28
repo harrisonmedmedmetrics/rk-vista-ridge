@@ -66,6 +66,11 @@ async function audit(name, viewport) {
       h1: document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim(),
       sectionCount: document.querySelectorAll("main section").length,
       imageCount: document.images.length,
+      upscaledImages: [...document.images].map(img => {
+        let deliveredWidth = img.naturalWidth;
+        try { deliveredWidth = Number(new URL(img.currentSrc || img.src).searchParams.get("w")) || deliveredWidth; } catch {}
+        return { img, deliveredWidth };
+      }).filter(({ img, deliveredWidth }) => img.clientWidth > 20 && deliveredWidth > 0 && img.clientWidth > deliveredWidth * 1.08).map(({ img, deliveredWidth }) => ({ src: img.currentSrc || img.src, deliveredWidth, naturalWidth: img.naturalWidth, renderedWidth: Math.round(img.clientWidth) })),
       unloadedImages: unloaded,
       brokenImages: [],
       missingTargets,
@@ -94,8 +99,8 @@ async function audit(name, viewport) {
   });
 
   const screenshotSections = name === "mobile"
-    ? ["top", "overview", "specialty", "gallery", "rk", "tour", "footer"]
-    : ["top", "facility", "controlled", "specialty", "film", "gallery", "rk", "tour", "footer"];
+    ? ["top", "overview", "specialty", "gallery", "location", "rk", "tour", "footer"]
+    : ["top", "facility", "controlled", "specialty", "film", "gallery", "location", "rk", "tour", "footer"];
   for (const key of screenshotSections) {
     const selector = {
       top: "#top",
@@ -114,7 +119,7 @@ async function audit(name, viewport) {
   }
 
   report.viewports[name] = { viewport, facts, axe, consoleErrors, pageErrors, requestFailures };
-  if (facts.brokenImages.length || facts.missingTargets.length || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
+  if (facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
   await context.close();
 }
 
@@ -124,22 +129,37 @@ function labelsMissing(labels) {
 
 await audit("desktop", { width: 1440, height: 900 });
 await audit("mobile", { width: 390, height: 844 });
+await audit("tablet", { width: 1024, height: 768 });
+await audit("laptop", { width: 1180, height: 820 });
 await audit("wide", { width: 1920, height: 1080 });
+await audit("ultrawide", { width: 2560, height: 1440 });
 
 const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 const page = await context.newPage();
 await page.goto(`${base}/?utm_source=qa&utm_medium=automation&utm_campaign=v1`, { waitUntil: "domcontentloaded" });
-await page.locator("#tour").scrollIntoViewIfNeeded();
-await page.getByLabel("Name *").fill("QA Test");
-await page.getByLabel("Company *").fill("Hermes QA");
-await page.getByLabel("Work email *").fill("qa@example.com");
-await page.getByLabel("What are you exploring? *").selectOption("unsure");
-await page.locator('input[name="consent"]').check();
-await page.getByRole("button", { name: "Request a Tour" }).last().click();
-await page.locator(".form-status.success").waitFor({ timeout: 10000 });
-const mailto = await page.locator('.form-status.success a[href^="mailto:"]').getAttribute("href");
-report.form = { success: true, mailtoPresent: !!mailto, destinationIsRK: !!mailto?.includes("info%40rklogisticsgroup.com"), attributionIncluded: !!mailto?.includes("qa") };
-if (!report.form.mailtoPresent || !report.form.destinationIsRK || !report.form.attributionIncluded) failed = true;
+await page.locator("#gallery").scrollIntoViewIfNeeded();
+await page.locator(".home-carousel-frame img.is-active").waitFor({ state: "visible", timeout: 15000 });
+const carouselBefore = await page.locator(".home-carousel-meta strong").textContent();
+await page.getByRole("button", { name: "Next property photo" }).click();
+const carouselAfter = await page.locator(".home-carousel-meta strong").textContent();
+const galleryHref = await page.getByRole("link", { name: /View all photos/ }).getAttribute("href");
+report.carousel = { changed: carouselBefore !== carouselAfter, before: carouselBefore, after: carouselAfter, galleryHref };
+if (!report.carousel.changed || galleryHref !== "/gallery") failed = true;
+if (process.env.QA_SKIP_FORM === "1") {
+  report.form = { skipped: true, reason: "QA_SKIP_FORM=1" };
+} else {
+  await page.locator("#tour").scrollIntoViewIfNeeded();
+  await page.getByLabel("Name *").fill("QA Test");
+  await page.getByLabel("Company *").fill("Hermes QA");
+  await page.getByLabel("Work email *").fill("qa@example.com");
+  await page.getByLabel("What are you exploring? *").selectOption("unsure");
+  await page.locator('input[name="consent"]').check();
+  await page.getByRole("button", { name: "Request a Tour" }).last().click();
+  await page.locator(".form-status.success").waitFor({ timeout: 15000 });
+  const mailto = await page.locator('.form-status.success a[href^="mailto:"]').getAttribute("href");
+  report.form = { success: true, mailtoPresent: !!mailto, destinationIsRK: !!mailto?.includes("info%40rklogisticsgroup.com"), attributionIncluded: !!mailto?.includes("qa") };
+  if (!report.form.mailtoPresent || !report.form.destinationIsRK || !report.form.attributionIncluded) failed = true;
+}
 
 const hrefs = await page.locator("a[href]").evaluateAll(els => [...new Set(els.map(el => el.getAttribute("href")))].filter(Boolean));
 report.links = { total: hrefs.length, internalAnchors: hrefs.filter(h => h.startsWith("#")).length, external: hrefs.filter(h => h.startsWith("http")).length, mailto: hrefs.filter(h => h.startsWith("mailto:")).length };
@@ -147,5 +167,5 @@ await context.close();
 await browser.close();
 
 await fs.writeFile(path.join(outDir, "qa-report.json"), JSON.stringify(report, null, 2));
-console.log(JSON.stringify({ failed, report: path.join(outDir, "qa-report.json"), viewports: Object.keys(report.viewports), form: report.form, summaries: Object.fromEntries(Object.entries(report.viewports).map(([k,v]) => [k, { scrollWidth: v.facts.scrollWidth, viewport: v.facts.viewport, brokenImages: v.facts.brokenImages.length, axeViolations: v.axe.length, consoleErrors: v.consoleErrors.length, pageErrors: v.pageErrors.length, video: `${v.facts.videoWidth}/${v.facts.videoReadyState}`, lcp: Math.round(v.facts.vitals.lcp), cls: Number(v.facts.vitals.cls.toFixed(4)) }])) }, null, 2));
+console.log(JSON.stringify({ failed, report: path.join(outDir, "qa-report.json"), viewports: Object.keys(report.viewports), form: report.form, carousel: report.carousel, summaries: Object.fromEntries(Object.entries(report.viewports).map(([k,v]) => [k, { scrollWidth: v.facts.scrollWidth, viewport: v.facts.viewport, brokenImages: v.facts.brokenImages.length, upscaledImages: v.facts.upscaledImages.length, axeViolations: v.axe.length, consoleErrors: v.consoleErrors.length, pageErrors: v.pageErrors.length, video: `${v.facts.videoWidth}/${v.facts.videoReadyState}`, lcp: Math.round(v.facts.vitals.lcp), cls: Number(v.facts.vitals.cls.toFixed(4)) }])) }, null, 2));
 process.exit(failed ? 1 : 0);
