@@ -12,7 +12,7 @@ const browser = await chromium.launch({
   args: ["--no-sandbox", "--disable-dev-shm-usage"],
 });
 
-const base = "http://127.0.0.1:4177";
+const base = process.env.QA_BASE_URL || "http://127.0.0.1:4177";
 const report = { url: base, createdAt: new Date().toISOString(), viewports: {}, errors: [], form: {}, links: {}, performance: {} };
 let failed = false;
 

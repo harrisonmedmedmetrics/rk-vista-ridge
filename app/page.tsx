@@ -44,7 +44,9 @@ export default function Home() {
       <SiteHeader />
       <main id="main">
         <section className="hero" id="top" aria-labelledby="hero-title">
-          <CinematicVideo className="hero-media" label="Cinematic exterior views of Vista Ridge" />
+          <div className="hero-media" aria-hidden="true">
+            <Image src="/media/hero.webp" alt="" fill priority fetchPriority="high" sizes="100vw" />
+          </div>
           <div className="hero-scrim" aria-hidden="true" />
           <div className="hero-grid-overlay" aria-hidden="true" />
           <div className="hero-content site-container">

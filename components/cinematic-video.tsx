@@ -8,10 +8,15 @@ export function CinematicVideo({ className = "", label = "Vista Ridge exterior f
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      videoRef.current?.pause();
-    }
+    const video = videoRef.current;
+    if (!video) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !reduce.matches) void video.play();
+      else video.pause();
+    }, { threshold: 0.22 });
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   const toggle = () => {
@@ -28,7 +33,7 @@ export function CinematicVideo({ className = "", label = "Vista Ridge exterior f
 
   return (
     <div className={`cinematic-video ${className}`}>
-      <video ref={videoRef} autoPlay muted loop playsInline preload="metadata" poster="/media/hero.webp" aria-label={label} onPause={() => setPaused(true)} onPlay={() => setPaused(false)}>
+      <video ref={videoRef} muted loop playsInline preload="metadata" poster="/media/hero.webp" aria-label={label} onPause={() => setPaused(true)} onPlay={() => setPaused(false)}>
         <source src="/media/vista-ridge-exterior-film.mp4" type="video/mp4" />
       </video>
       <button type="button" className="video-control" onClick={toggle} aria-label={paused ? "Play property film" : "Pause property film"}>
