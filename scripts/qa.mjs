@@ -93,9 +93,18 @@ async function audit(name, viewport) {
     return result.violations.map(v => ({ id: v.id, impact: v.impact, description: v.description, nodes: v.nodes.length, targets: v.nodes.slice(0, 10).map(n => n.target) }));
   });
 
-  const screenshotSections = name === "mobile" ? ["top", "overview", "gallery", "tour"] : ["top", "facility", "controlled", "gallery", "tour"];
+  const screenshotSections = name === "mobile"
+    ? ["top", "overview", "specialty", "gallery", "rk", "tour", "footer"]
+    : ["top", "facility", "controlled", "specialty", "film", "gallery", "rk", "tour", "footer"];
   for (const key of screenshotSections) {
-    const selector = key === "top" ? "#top" : key === "controlled" ? ".controlled-section" : `#${key}`;
+    const selector = {
+      top: "#top",
+      controlled: ".controlled-section",
+      specialty: ".specialty-section",
+      film: ".film-section",
+      rk: ".rk-section",
+      footer: ".site-footer",
+    }[key] || `#${key}`;
     const el = page.locator(selector).first();
     if (await el.count()) {
       await el.scrollIntoViewIfNeeded();

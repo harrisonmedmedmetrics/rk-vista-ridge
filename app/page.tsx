@@ -48,7 +48,6 @@ export default function Home() {
             <Image src="/media/hero.webp" alt="" fill priority fetchPriority="high" sizes="100vw" />
           </div>
           <div className="hero-scrim" aria-hidden="true" />
-          <div className="hero-grid-overlay" aria-hidden="true" />
           <div className="hero-content site-container">
             <p className="hero-eyebrow"><span />RK Logistics Group · Kyle, Texas</p>
             <h1 id="hero-title">Vista<br />Ridge</h1>
@@ -138,7 +137,7 @@ export default function Home() {
         <section className="specialty-section" aria-labelledby="specialty-title">
           <div className="site-container specialty-grid">
             <Reveal>
-              <div className="section-kicker light"><span>03</span><p>Specialized capacity</p></div>
+              <div className="section-kicker"><span>03</span><p>Specialized capacity</p></div>
               <h2 id="specialty-title">Infrastructure for more demanding work.</h2>
             </Reveal>
             <div className="specialty-cards">
@@ -216,16 +215,22 @@ export default function Home() {
         </section>
 
         <section className="rk-section" aria-labelledby="rk-title">
+          <div className="rk-wordmark" aria-hidden="true">RK</div>
           <div className="site-container rk-grid">
-            <Reveal className="rk-logo-panel">
-              <Image src="/brand/rk-logo-white.png" alt="RK Logistics Group" width={548} height={138} />
-              <span>Innovation in logistics</span>
+            <Reveal className="rk-brand-intro">
+              <p className="section-label">RK Logistics Group</p>
+              <Image src="/brand/rk-logo.png" alt="RK Logistics Group" width={548} height={138} />
+              <p>National capability. Local execution.</p>
             </Reveal>
             <Reveal delay={100} className="rk-copy">
-              <p className="section-label">Operated by RK Logistics Group</p>
-              <h2 id="rk-title">Industrial space backed by logistics expertise.</h2>
+              <h2 id="rk-title">Logistics expertise behind the space.</h2>
               <p>RK supports demanding supply chains with secured storage and staging, optimized site layouts, material handling, kitting, packing, crating, light assembly and shipping services.</p>
-              <a className="text-link light" href="https://rklogisticsgroup.com/warehousing/" target="_blank" rel="noreferrer">Explore RK Logistics <ArrowUpRight size={17} /></a>
+              <div className="rk-proof-row" aria-label="RK Logistics company facts">
+                <div><strong>35+</strong><span>Years in logistics</span></div>
+                <div><strong>17</strong><span>Warehouse sites</span></div>
+                <div><strong>500+</strong><span>Team members</span></div>
+              </div>
+              <a className="text-link" href="https://rklogisticsgroup.com/warehousing/" target="_blank" rel="noreferrer">Explore RK Logistics <ArrowUpRight size={17} /></a>
             </Reveal>
           </div>
         </section>
@@ -234,7 +239,7 @@ export default function Home() {
           <div className="site-container tour-grid">
             <Reveal className="tour-intro">
               <div className="section-kicker"><span>06</span><p>Request a tour</p></div>
-              <h2 id="tour-title">Bring us your requirements.</h2>
+              <h2 id="tour-title">Let’s talk about your operation.</h2>
               <p>Tell RK Logistics what you are solving for. The team will review your requirements and coordinate a qualified property conversation.</p>
               <div className="tour-trust">
                 <div><Checkmark />Direct review by RK Logistics</div>
@@ -249,7 +254,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <div className="site-container footer-main">
-          <a className="footer-brand" href="#top"><Image src="/brand/rk-logo-white.png" alt="RK Logistics Group" width={548} height={138} /><span>Vista Ridge · Kyle, Texas</span></a>
+          <a className="footer-brand" href="#top"><Image src="/brand/rk-logo-white.png" alt="RK Logistics Group" width={548} height={138} /></a>
           <div className="footer-links"><a href="#facility">Facility</a><a href="#gallery">Gallery</a><a href="#location">Location</a><a href="#tour">Tour</a></div>
           <div className="footer-contact"><p>Property inquiries</p><a href={`mailto:${siteConfig.tourEmail}`}>{siteConfig.tourEmail}</a><a href="tel:+18008217770">(800) 821-7770</a></div>
         </div>

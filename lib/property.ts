@@ -71,12 +71,15 @@ export const property = {
     sourceUrl: "https://kyleed.com/choose-kyle/transportation-and-location",
   },
   gallery: [
-    { src: "/media/hero.webp", alt: "Vista Ridge front entrance and office façade", label: "Arrival" },
-    { src: "/media/interior-wide.webp", alt: "Wide view across the Vista Ridge warehouse floor", label: "Warehouse floor" },
+    { src: "/media/facade.webp", alt: "Vista Ridge exterior façade and arrival court", label: "Exterior" },
     { src: "/media/interior-aisle-alt.webp", alt: "Long interior warehouse aisle at Vista Ridge", label: "Storage depth" },
     { src: "/media/dock.webp", alt: "Interior loading door and staging area at Vista Ridge", label: "Loading" },
-    { src: "/media/loading.webp", alt: "Exterior loading elevation and truck court at Vista Ridge", label: "Truck access" },
+    { src: "/media/loading.webp", alt: "Exterior loading elevation and truck court at Vista Ridge", label: "Dock elevation" },
     { src: "/media/office.webp", alt: "Office and support area inside Vista Ridge", label: "Support space" },
+    { src: "/media/interior-volume.webp", alt: "Broad warehouse bay showing interior scale at Vista Ridge", label: "Interior volume" },
+    { src: "/media/interior-aisle.webp", alt: "Racked storage aisle inside Vista Ridge", label: "Warehouse aisle" },
+    { src: "/media/truck-court.webp", alt: "Wide truck-court view at Vista Ridge", label: "Truck court" },
+    { src: "/media/arrival.webp", alt: "Wide arrival view across Vista Ridge", label: "Approach" },
   ],
 } as const;
 
