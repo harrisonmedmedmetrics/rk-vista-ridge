@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Reveal } from "@/components/reveal";
 import { CinematicVideo } from "@/components/cinematic-video";
+import { FacilitySpecifications } from "@/components/facility-specifications";
 import { GalleryCarousel } from "@/components/gallery-carousel";
 import { CorridorMap } from "@/components/corridor-map";
 import { TourRequestForm } from "@/components/tour-request-form";
@@ -170,6 +171,8 @@ export default function Home() {
           </div>
         </section>
 
+        <FacilitySpecifications />
+
         <section className="film-section" aria-labelledby="film-title">
           <CinematicVideo className="film-media" label="Vista Ridge exterior property film" />
           <div className="film-overlay" aria-hidden="true" />
@@ -185,7 +188,7 @@ export default function Home() {
         <section className="gallery-section" id="gallery" aria-labelledby="gallery-title">
           <div className="site-container gallery-heading">
             <Reveal>
-              <div className="section-kicker"><span>04</span><p>Property gallery</p></div>
+              <div className="section-kicker"><span>05</span><p>Property gallery</p></div>
               <div className="gallery-title-row"><h2 id="gallery-title">A facility you can understand before you arrive.</h2><p>Exterior access, warehouse volume, loading infrastructure and support space, shown through real property imagery.</p></div>
             </Reveal>
           </div>
@@ -196,7 +199,7 @@ export default function Home() {
           <div className="location-map-wrap"><CorridorMap /></div>
           <div className="location-content">
             <Reveal>
-              <div className="section-kicker dark"><span>05</span><p>Location</p></div>
+              <div className="section-kicker dark"><span>06</span><p>Location</p></div>
               <MapPin size={30} />
               <h2 id="location-title">{property.location.title}</h2>
               <p>{property.location.copy}</p>
@@ -232,7 +235,7 @@ export default function Home() {
         <section className="tour-section" id="tour" aria-labelledby="tour-title">
           <div className="site-container tour-grid">
             <Reveal className="tour-intro">
-              <div className="section-kicker"><span>06</span><p>Request a tour</p></div>
+              <div className="section-kicker"><span>07</span><p>Request a tour</p></div>
               <h2 id="tour-title">Let’s talk about your operation.</h2>
               <p>Tell RK Logistics what you are solving for. The team will review your requirements and coordinate a qualified property conversation.</p>
               <div className="tour-trust">

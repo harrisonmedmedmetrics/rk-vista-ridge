@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Vista Ridge | Specialized Industrial Space in Kyle, Texas",
   description: siteConfig.description,
   applicationName: "Vista Ridge by RK Logistics Group",
+  robots: siteConfig.indexable ? { index: true, follow: true } : { index: false, follow: false, nocache: true },
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",

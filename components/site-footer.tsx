@@ -7,7 +7,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="site-container footer-main">
         <Link className="footer-brand" href="/"><Image src="/brand/rk-logo-white.png" alt="RK Logistics Group" width={548} height={138} /></Link>
-        <div className="footer-links"><Link href="/#facility">Facility</Link><Link href="/gallery">Gallery</Link><Link href="/#location">Location</Link><Link href="/#tour">Tour</Link></div>
+        <div className="footer-links"><Link href="/#facility">Facility</Link><Link href="/#specifications">Specs</Link><Link href="/gallery">Gallery</Link><Link href="/#location">Location</Link><Link href="/#tour">Tour</Link></div>
         <div className="footer-contact"><p>Property inquiries</p><a href={`mailto:${siteConfig.tourEmail}`}>{siteConfig.tourEmail}</a><a href="tel:+18008217770">(800) 821-7770</a></div>
       </div>
       <div className="site-container footer-bottom">

@@ -8,6 +8,7 @@ import { Menu, Close } from "@/components/icons";
 const links = [
   ["Overview", "/#overview"],
   ["Facility", "/#facility"],
+  ["Specs", "/#specifications"],
   ["Location", "/#location"],
   ["Gallery", "/gallery"],
 ] as const;

@@ -65,6 +65,10 @@ async function audit(name, viewport) {
       title: document.title,
       h1: document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim(),
       sectionCount: document.querySelectorAll("main section").length,
+      specificationEntries: [...document.querySelectorAll(".specification-list div")].map(item => ({
+        label: item.querySelector("dt")?.textContent?.replace(/\s+/g, " ").trim(),
+        value: item.querySelector("dd")?.textContent?.replace(/\s+/g, " ").trim(),
+      })),
       imageCount: document.images.length,
       specialtyGap: (() => {
         const heading = document.querySelector("#specialty-title")?.getBoundingClientRect();
@@ -104,8 +108,8 @@ async function audit(name, viewport) {
   });
 
   const screenshotSections = name === "mobile"
-    ? ["top", "overview", "specialty", "gallery", "location", "rk", "tour", "footer"]
-    : ["top", "facility", "controlled", "specialty", "film", "gallery", "location", "rk", "tour", "footer"];
+    ? ["top", "overview", "specialty", "specifications", "gallery", "location", "rk", "tour", "footer"]
+    : ["top", "facility", "controlled", "specialty", "specifications", "film", "gallery", "location", "rk", "tour", "footer"];
   for (const key of screenshotSections) {
     const selector = {
       top: "#top",
@@ -124,7 +128,7 @@ async function audit(name, viewport) {
   }
 
   report.viewports[name] = { viewport, facts, axe, consoleErrors, pageErrors, requestFailures };
-  if (facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || (facts.specialtyGap !== null && facts.specialtyGap < 24) || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
+  if (facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || facts.specificationEntries.length !== 6 || facts.specificationEntries.some(item => !item.label || !item.value) || (facts.specialtyGap !== null && facts.specialtyGap < 24) || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
   await context.close();
 }
 
@@ -147,9 +151,18 @@ await page.locator(".home-carousel-frame img.is-active").waitFor({ state: "visib
 const carouselBefore = await page.locator(".home-carousel-meta strong").textContent();
 await page.getByRole("button", { name: "Next property photo" }).click();
 const carouselAfter = await page.locator(".home-carousel-meta strong").textContent();
-const galleryHref = await page.getByRole("link", { name: /View all photos/ }).getAttribute("href");
+const galleryHref = await page.getByRole("link", { name: "View all 12 photos" }).getAttribute("href");
 report.carousel = { changed: carouselBefore !== carouselAfter, before: carouselBefore, after: carouselAfter, galleryHref };
 if (!report.carousel.changed || galleryHref !== "/gallery") failed = true;
+
+const expectReview = process.env.QA_EXPECT_REVIEW !== "0";
+const robotsMeta = await page.locator('meta[name="robots"]').getAttribute("content");
+const robotsText = await (await page.request.get(`${base}/robots.txt`)).text();
+const sitemapText = await (await page.request.get(`${base}/sitemap.xml`)).text();
+report.launch = { expectReview, robotsMeta, robotsText, sitemapHasUrl: sitemapText.includes("<url>") };
+if (expectReview && (!robotsMeta?.includes("noindex") || !robotsMeta.includes("nofollow") || !robotsText.includes("Disallow: /") || report.launch.sitemapHasUrl)) failed = true;
+if (!expectReview && (!robotsMeta?.includes("index") || !robotsText.includes("Allow: /") || !report.launch.sitemapHasUrl)) failed = true;
+
 if (process.env.QA_SKIP_FORM === "1") {
   report.form = { skipped: true, reason: "QA_SKIP_FORM=1" };
 } else {

@@ -7,10 +7,12 @@ export const siteConfig = {
   tourEmail: process.env.TOUR_REQUEST_EMAIL || "info@rklogisticsgroup.com",
   corporateUrl: "https://rklogisticsgroup.com",
   privacyUrl: "https://rklogisticsgroup.com/data-privacy-statement/",
+  indexable: process.env.NEXT_PUBLIC_SITE_INDEXABLE === "true",
 };
 
 export const property = {
   id: "vista-ridge",
+  pageVersion: "2026-08-31-launch-candidate",
   name: "Vista Ridge",
   market: "Kyle, Texas",
   corridor: "Texas Innovation Corridor",
@@ -24,6 +26,20 @@ export const property = {
     { value: "3,250", unit: "SF", label: "Dedicated workroom" },
     { value: "16", unit: "× 480V", label: "Internal power outlets" },
   ],
+  technicalProfile: {
+    eyebrow: "Facility profile",
+    title: "A clear profile for an initial fit check.",
+    copy: "A concise view of the physical infrastructure at Vista Ridge, built for preliminary operational evaluation before a property conversation.",
+    specifications: [
+      { label: "Total facility", value: "208,010 SF" },
+      { label: "Dock doors", value: "71" },
+      { label: "Climate-controlled area", value: "60,000 SF" },
+      { label: "Walk-in cold storage", value: "360 SF" },
+      { label: "Dedicated workroom", value: "3,250 SF" },
+      { label: "Internal power outlets", value: "16 × 480V" },
+    ],
+    note: "Property information is provided for preliminary evaluation. Final technical fit, proposed use and commercial terms are confirmed with RK Logistics.",
+  },
   capabilities: [
     {
       eyebrow: "Controlled environment",

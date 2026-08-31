@@ -10,7 +10,7 @@ import { property, siteConfig } from "@/lib/property";
 
 export const metadata: Metadata = {
   title: "Property Gallery | Vista Ridge",
-  description: "Explore twelve documentary exterior, loading, warehouse and support-space photographs from Vista Ridge in Kyle, Texas.",
+  description: `Explore ${property.gallery.length} documentary exterior, loading, warehouse and support-space photographs from Vista Ridge in Kyle, Texas.`,
   alternates: { canonical: "/gallery" },
   openGraph: {
     title: "Vista Ridge Property Gallery",
@@ -38,7 +38,7 @@ export default function GalleryPage() {
           <div className="site-container">
             <div className="section-kicker"><span>01</span><p>Explore the facility</p></div>
             <div>
-              <h2>Twelve views.<br />One facility.</h2>
+              <h2>{property.gallery.length} views.<br />One facility.</h2>
               <p>Move through exterior arrival, loading infrastructure, warehouse volume, circulation and support space. Select any image for a full-size view.</p>
             </div>
           </div>

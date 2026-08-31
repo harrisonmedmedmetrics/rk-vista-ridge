@@ -31,8 +31,7 @@ Production checks:
 npm run lint
 npm run typecheck
 npm run build
-npm start -- --port 4177
-node scripts/qa.mjs
+npm run qa:full
 ```
 
 ## Tour-request routing
@@ -40,12 +39,13 @@ node scripts/qa.mjs
 The form posts to `/api/tour-request`.
 
 - If `TOUR_REQUEST_WEBHOOK_URL` is configured, requests are sent to that endpoint.
-- Otherwise, the user receives a prefilled email addressed to RK Logistics' public inquiry inbox.
-- Set `TOUR_REQUEST_EMAIL` to change the fallback recipient without changing UI code.
+- In review mode, the user receives a prefilled email addressed to RK Logistics' public inquiry inbox.
+- For production, set `TOUR_REQUEST_DELIVERY_MODE=webhook-required` with a real monitored endpoint, named primary and backup owners, and a positive response SLA. The API then returns an error instead of silently falling back if routing is incomplete or the endpoint fails.
+- Set `TOUR_REQUEST_EMAIL` to change the review fallback recipient without changing UI code.
 - `TOUR_REQUEST_WEBHOOK_SECRET` adds a bearer credential to webhook requests.
 - UTM fields and `gclid` / `fbclid` are captured in the request payload.
 
-See `.env.example` for configuration.
+See `.env.example` and `docs/LAUNCH-CONTROL.md` for configuration and approval gates.
 
 ## Media provenance
 
@@ -59,6 +59,9 @@ This repository intentionally excludes raw agreements, customer or employee info
 
 This project is designed for a dedicated Vercel review project. Production launch requires:
 
-1. a monitored inquiry recipient or webhook;
-2. a successful end-to-end tour-request test; and
-3. approval of the exact deployed V1.
+1. commercial approval of the exact offer, property facts, media and deployed V1;
+2. a monitored webhook with named primary/backup owners and response SLA;
+3. a successful end-to-end tour-request test verified at the receiving system; and
+4. an approved production domain with `NEXT_PUBLIC_SITE_INDEXABLE=true` applied only at the production build.
+
+The review candidate is deliberately noindex until that final approval. See `docs/LAUNCH-CONTROL.md` for the production handoff and `docs/30-DAY-PILOT.md` for the approval-gated rollout.

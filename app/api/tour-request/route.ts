@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { siteConfig, type TourRequest } from "@/lib/property";
+import { getLeadRouting, routingConfigurationIssue } from "@/lib/lead-routing";
+import { property, siteConfig, type TourRequest } from "@/lib/property";
 
 const rateLimit = new Map<string, { count: number; reset: number }>();
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -76,8 +77,8 @@ export async function POST(request: Request) {
     message: text(raw.message, 1500),
     consent: raw.consent === true,
     website: "",
-    propertyId: text(raw.propertyId, 80),
-    pageVersion: text(raw.pageVersion, 40),
+    propertyId: property.id,
+    pageVersion: property.pageVersion,
     source: text(raw.source, 120),
     medium: text(raw.medium, 120),
     campaign: text(raw.campaign, 120),
@@ -86,12 +87,17 @@ export async function POST(request: Request) {
     clickId: text(raw.clickId, 200),
   };
 
-  if (!data.name || !data.company || !EMAIL_RE.test(data.email) || !INTERESTS.has(data.interest) || !data.consent || data.propertyId !== "vista-ridge") {
+  if (!data.name || !data.company || !EMAIL_RE.test(data.email) || !INTERESTS.has(data.interest) || !data.consent || data.propertyId !== property.id) {
     return NextResponse.json({ error: "Please complete the required fields." }, { status: 400 });
   }
 
   const requestId = crypto.randomUUID();
+  const routing = getLeadRouting();
   const webhook = process.env.TOUR_REQUEST_WEBHOOK_URL;
+  const routingIssue = routingConfigurationIssue(routing, webhook);
+  if (routingIssue) {
+    return NextResponse.json({ code: "routing_unavailable", error: "Tour requests are temporarily unavailable. Please contact RK Logistics directly." }, { status: 503 });
+  }
   if (webhook) {
     try {
       const response = await fetch(webhook, {
@@ -100,13 +106,26 @@ export async function POST(request: Request) {
           "Content-Type": "application/json",
           ...(process.env.TOUR_REQUEST_WEBHOOK_SECRET ? { Authorization: `Bearer ${process.env.TOUR_REQUEST_WEBHOOK_SECRET}` } : {}),
         },
-        body: JSON.stringify({ ...data, requestId, receivedAt: new Date().toISOString() }),
+        body: JSON.stringify({
+          ...data,
+          requestId,
+          receivedAt: new Date().toISOString(),
+          routing: {
+            primaryOwner: routing.primaryOwner,
+            backupOwner: routing.backupOwner,
+            responseSlaMinutes: routing.responseSlaMinutes,
+          },
+        }),
         signal: AbortSignal.timeout(7000),
       });
       if (response.ok) return NextResponse.json({ ok: true, requestId, mode: "webhook" });
     } catch {
-      // Fall through to the safe, user-controlled email path.
+      // Review mode may fall back to a visitor-controlled email draft.
     }
+  }
+
+  if (routing.deliveryMode === "webhook-required") {
+    return NextResponse.json({ code: "delivery_unavailable", error: "Tour requests are temporarily unavailable. Please contact RK Logistics directly." }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true, requestId, mode: "mailto", mailtoUrl: buildMailto(data, requestId) });

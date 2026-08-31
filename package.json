@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "qa": "node scripts/qa.mjs",
-    "qa:gallery": "node scripts/qa-gallery.mjs"
+    "qa:gallery": "node scripts/qa-gallery.mjs",
+    "qa:lead-intake": "node scripts/qa-lead-intake.mjs",
+    "qa:full": "node scripts/run-qa.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

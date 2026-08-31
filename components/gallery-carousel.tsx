@@ -7,6 +7,7 @@ import { ArrowRight, ArrowUpRight } from "@/components/icons";
 import { property } from "@/lib/property";
 
 const slides = [property.gallery[8], property.gallery[5], property.gallery[7]];
+const galleryCount = property.gallery.length;
 
 export function GalleryCarousel() {
   const [active, setActive] = useState(0);
@@ -40,8 +41,8 @@ export function GalleryCarousel() {
         </div>
       </div>
       <div className="home-carousel-footer site-container">
-        <p>Three views from the facility. Explore the full property collection for exterior, loading, interior-volume and support-space photography.</p>
-        <Link className="text-link" href="/gallery">View all photos <ArrowUpRight size={17} /></Link>
+        <p>A {galleryCount}-image property collection covering exterior access, loading infrastructure, interior volume and support space.</p>
+        <Link className="text-link" href="/gallery">View all {galleryCount} photos <ArrowUpRight size={17} /></Link>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { ArrowUpRight, Check } from "@/components/icons";
+import { property } from "@/lib/property";
 
 type ApiResult = { ok?: boolean; error?: string; requestId?: string; mode?: string; mailtoUrl?: string };
 
@@ -19,8 +20,8 @@ export function TourRequestForm() {
     const payload = Object.fromEntries(form.entries()) as Record<string, unknown>;
     const q = new URLSearchParams(window.location.search);
     payload.consent = form.get("consent") === "on";
-    payload.propertyId = "vista-ridge";
-    payload.pageVersion = "v1";
+    payload.propertyId = property.id;
+    payload.pageVersion = property.pageVersion;
     payload.source = q.get("utm_source") || "direct";
     payload.medium = q.get("utm_medium") || "website";
     payload.campaign = q.get("utm_campaign") || "";
