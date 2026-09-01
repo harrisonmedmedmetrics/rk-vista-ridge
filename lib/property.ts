@@ -67,9 +67,27 @@ export const property = {
     },
   ],
   h4: {
-    title: "Current H4 storage approval",
+    eyebrow: "Hazardous-material readiness",
+    title: "A current storage profile for toxic and corrosive materials.",
     copy:
       "The facility currently holds H4 storage approval based on toxic and corrosive classifications stored on site.",
+    details: [
+      {
+        label: "Current storage approval",
+        value: "H4",
+        copy: "The facility's current hazardous-material storage profile.",
+      },
+      {
+        label: "Classifications on site",
+        value: "Toxic + corrosive",
+        copy: "The classifications supporting the current storage approval.",
+      },
+      {
+        label: "Other classifications",
+        value: "Confirm fit",
+        copy: "Additional infrastructure, permitting and operational approval may be required.",
+      },
+    ],
     caveat:
       "Other hazardous-material classifications may require additional infrastructure, permitting and operational approval. Capability should be confirmed for each proposed use.",
   },

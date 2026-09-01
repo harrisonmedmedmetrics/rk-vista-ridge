@@ -162,13 +162,34 @@ export default function Home() {
               </Reveal>
             </div>
           </div>
-          <div className="h4-band site-container">
-            <Reveal>
-              <div className="h4-mark">H4</div>
-              <div><p className="section-label">Hazardous-material readiness</p><h3>{property.h4.title}</h3><p>{property.h4.copy}</p></div>
-              <p className="h4-caveat">{property.h4.caveat}</p>
-            </Reveal>
-          </div>
+          <section className="h4-band" id="hazmat" aria-labelledby="hazmat-title">
+            <div className="site-container h4-band-inner">
+              <Reveal className="h4-lead">
+                <div className="h4-mark" aria-hidden="true">H4</div>
+                <div className="h4-intro">
+                  <p className="section-label">{property.h4.eyebrow}</p>
+                  <h3 id="hazmat-title">{property.h4.title}</h3>
+                  <p>{property.h4.copy}</p>
+                </div>
+              </Reveal>
+              <div className="h4-detail-grid" role="list" aria-label="Hazardous-material capability at Vista Ridge">
+                {property.h4.details.map((detail) => (
+                  <article className="h4-detail" role="listitem" key={detail.label}>
+                    <p className="h4-detail-label">{detail.label}</p>
+                    <strong>{detail.value}</strong>
+                    <p>{detail.copy}</p>
+                  </article>
+                ))}
+              </div>
+              <Reveal className="h4-caveat" delay={100}>
+                <div>
+                  <p className="h4-caveat-label">Scope note</p>
+                  <p>{property.h4.caveat}</p>
+                </div>
+                <a className="text-link light" href="#tour">Discuss your material requirements <ArrowUpRight size={17} /></a>
+              </Reveal>
+            </div>
+          </section>
         </section>
 
         <FacilitySpecifications />

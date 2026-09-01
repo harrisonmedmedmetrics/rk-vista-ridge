@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Manrope, Sora } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/property";
 
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-const sora = Sora({ subsets: ["latin"], variable: "--font-display", display: "swap" });
+// RK's live site uses Inter across its current homepage and navigation.
+const inter = Inter({ subsets: ["latin"], variable: "--font-rk", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${sora.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body>{children}</body>
     </html>
   );
