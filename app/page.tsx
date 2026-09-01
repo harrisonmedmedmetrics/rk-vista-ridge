@@ -165,7 +165,10 @@ export default function Home() {
           <section className="h4-band" id="hazmat" aria-labelledby="hazmat-title">
             <div className="site-container h4-band-inner">
               <Reveal className="h4-lead">
-                <div className="h4-mark" aria-hidden="true">H4</div>
+                <div className="h4-mark" aria-label="H4 storage approval">
+                  <strong>H4</strong>
+                  <span>Storage approval</span>
+                </div>
                 <div className="h4-intro">
                   <p className="section-label">{property.h4.eyebrow}</p>
                   <h3 id="hazmat-title">{property.h4.title}</h3>

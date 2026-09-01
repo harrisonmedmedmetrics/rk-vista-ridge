@@ -68,7 +68,7 @@ export const property = {
   ],
   h4: {
     eyebrow: "Hazardous-material readiness",
-    title: "A current storage profile for toxic and corrosive materials.",
+    title: "Built for operations that cannot compromise.",
     copy:
       "The facility currently holds H4 storage approval based on toxic and corrosive classifications stored on site.",
     details: [
