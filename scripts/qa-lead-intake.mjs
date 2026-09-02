@@ -130,7 +130,7 @@ try {
   await new Promise(resolve => setTimeout(resolve, 150));
   assert.equal(webhook.received.length, 1);
   assert.equal(webhook.received[0].body.propertyId, "vista-ridge");
-  assert.equal(webhook.received[0].body.pageVersion, "2026-08-31-launch-candidate");
+  assert.equal(webhook.received[0].body.pageVersion, "2026-09-02-james-review");
   assert.deepEqual(webhook.received[0].body.routing, {
     primaryOwner: "primary-owner",
     backupOwner: "backup-owner",

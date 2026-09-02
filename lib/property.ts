@@ -12,7 +12,7 @@ export const siteConfig = {
 
 export const property = {
   id: "vista-ridge",
-  pageVersion: "2026-08-31-launch-candidate",
+  pageVersion: "2026-09-02-james-review",
   name: "Vista Ridge",
   market: "Kyle, Texas",
   corridor: "Texas Innovation Corridor",
@@ -64,6 +64,12 @@ export const property = {
       title: "Heavy power where the work happens",
       copy:
         "Sixteen internal 480V outlets support demanding equipment and flexible industrial operating requirements across the building.",
+    },
+    {
+      eyebrow: "Hazardous-material storage",
+      title: "Current H4 storage approval",
+      copy:
+        "The facility's current storage profile reflects toxic and corrosive classifications stored on site; proposed uses require fit confirmation.",
     },
   ],
   h4: {

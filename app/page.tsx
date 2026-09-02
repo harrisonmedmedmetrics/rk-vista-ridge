@@ -8,10 +8,10 @@ import { GalleryCarousel } from "@/components/gallery-carousel";
 import { CorridorMap } from "@/components/corridor-map";
 import { TourRequestForm } from "@/components/tour-request-form";
 import { MobileTourBar } from "@/components/mobile-tour-bar";
-import { ArrowRight, ArrowUpRight, Bolt, MapPin, Snowflake, Thermometer } from "@/components/icons";
+import { ArrowRight, ArrowUpRight, Bolt, Flask, MapPin, Snowflake, Thermometer } from "@/components/icons";
 import { property, siteConfig } from "@/lib/property";
 
-const capabilityIcons = [Thermometer, Snowflake, Thermometer, Bolt];
+const capabilityIcons = [Thermometer, Snowflake, Thermometer, Bolt, Flask];
 
 export default function Home() {
   const jsonLd = {
@@ -52,7 +52,7 @@ export default function Home() {
           </div>
           <div className="hero-scrim" aria-hidden="true" />
           <div className="hero-content site-container">
-            <p className="hero-eyebrow"><span />RK Logistics Group · Kyle, Texas</p>
+            <p className="hero-eyebrow">RK Logistics Group · Kyle, Texas</p>
             <h1 id="hero-title">Vista<br />Ridge</h1>
             <p className="hero-copy">{property.headline}</p>
             <div className="hero-actions">
