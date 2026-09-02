@@ -73,9 +73,10 @@ try {
   await waitFor(base, server);
   const qaEnv = { ...env, QA_BASE_URL: base, QA_EXPECT_REVIEW: "1" };
   await run(process.execPath, ["scripts/qa.mjs"], qaEnv);
+  await run(process.execPath, ["scripts/qa-rk-header.mjs"], qaEnv);
   await run(process.execPath, ["scripts/qa-gallery.mjs"], qaEnv);
   await run(process.execPath, ["scripts/qa-lead-intake.mjs"], qaEnv);
-  console.log(JSON.stringify({ ok: true, base, suites: ["browser", "gallery", "lead-intake"] }, null, 2));
+  console.log(JSON.stringify({ ok: true, base, suites: ["browser", "rk-header", "gallery", "lead-intake"] }, null, 2));
 } finally {
   await stop(server);
 }

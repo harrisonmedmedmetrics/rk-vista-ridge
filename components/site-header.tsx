@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Close, Menu } from "@/components/icons";
 
 const corporateRoot = "https://www.rklogisticsgroup.com";
@@ -78,20 +77,28 @@ const directLinks: NavLink[] = [
   { label: "Latest News", href: `${corporateRoot}/field-notes.html` },
 ];
 
-function CorporateLink({ link, onNavigate }: { link: NavLink; onNavigate?: () => void }) {
+function CorporateLink({ link, className, onNavigate }: { link: NavLink; className?: string; onNavigate?: () => void }) {
   return (
-    <a href={link.href} target={link.newTab ? "_blank" : undefined} rel={link.newTab ? "noopener" : undefined} onClick={onNavigate}>
+    <a
+      className={className}
+      href={link.href}
+      target={link.newTab ? "_blank" : undefined}
+      rel={link.newTab ? "noopener" : undefined}
+      onClick={onNavigate}
+    >
       {link.label}
     </a>
   );
 }
 
-function NavigationGroup({ group, onNavigate }: { group: NavGroup; onNavigate?: () => void }) {
+function NavigationGroup({ group, className, onNavigate }: { group: NavGroup; className?: string; onNavigate?: () => void }) {
   return (
-    <details className="rk-nav-drop">
+    <details className={["rk-nav-drop", className].filter(Boolean).join(" ")}>
       <summary>{group.label}</summary>
-      <div className="rk-nav-panel" role="menu">
-        {group.links.map((link) => <CorporateLink key={`${group.label}-${link.label}`} link={link} onNavigate={onNavigate} />)}
+      <div className="rk-nav-panel">
+        {group.links.map((link) => (
+          <CorporateLink key={`${group.label}-${link.label}`} link={link} onNavigate={onNavigate} />
+        ))}
       </div>
     </details>
   );
@@ -107,6 +114,18 @@ function PhoneIcon() {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  const closeDetails = useCallback(() => {
+    headerRef.current?.querySelectorAll<HTMLDetailsElement>("details[open]").forEach((details) => {
+      details.open = false;
+    });
+  }, []);
+
+  const closeNavigation = useCallback(() => {
+    setOpen(false);
+    closeDetails();
+  }, [closeDetails]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -114,52 +133,65 @@ export function SiteHeader() {
   }, [open]);
 
   useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onDesktopChange = (event: MediaQueryListEvent) => {
+      if (event.matches) closeNavigation();
+    };
+    desktop.addEventListener("change", onDesktopChange);
+    return () => desktop.removeEventListener("change", onDesktopChange);
+  }, [closeNavigation]);
+
+  useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closeNavigation();
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [closeNavigation, open]);
+
+  const toggleNavigation = () => {
+    const nextOpen = !open;
+    closeDetails();
+    setOpen(nextOpen);
+  };
 
   return (
-    <>
-      <header className="site-header rk-site-header">
-        <a className="skip-link" href="#main">Skip to content</a>
-        <div className="rk-header-inner">
-          <a className="rk-header-brand" href={`${corporateRoot}/index.html`} aria-label="RK Logistics home">
-            <Image className="rk-header-logo" src="/brand/rk-logo.png" alt="RK Logistics" width={548} height={138} priority />
-          </a>
+    <header ref={headerRef} className="site-header rk-site-header">
+      <a className="skip-link" href="#main">Skip to content</a>
+      <div className="rk-header-inner">
+        <a className="rk-header-brand" href={`${corporateRoot}/index.html`} aria-label="RK Logistics home">
+          <span className="rk-header-wordmark"><span className="rk-header-rk">RK</span>Logistics</span>
+          <span className="rk-header-tagline">Logistics for Innovation</span>
+        </a>
 
-          <nav className="rk-desktop-nav" aria-label="RK Logistics primary navigation">
-            <NavigationGroup group={whatWeDo} />
-            <NavigationGroup group={services} />
-            <NavigationGroup group={about} />
-            {directLinks.map((link) => <CorporateLink key={link.label} link={link} />)}
-          </nav>
+        <nav className="rk-desktop-nav" id="rk-primary-nav" aria-label="RK Logistics primary navigation" data-open={open ? "true" : "false"}>
+          <NavigationGroup group={whatWeDo} onNavigate={closeNavigation} />
+          <NavigationGroup group={services} className="rk-nav-services-primary" onNavigate={closeNavigation} />
+          <NavigationGroup group={about} onNavigate={closeNavigation} />
+          {directLinks.map((link) => <CorporateLink key={link.label} link={link} onNavigate={closeNavigation} />)}
+          {customerLogin.links.map((link) => (
+            <CorporateLink key={`mobile-${link.label}`} className="rk-nav-login-mobile" link={link} onNavigate={closeNavigation} />
+          ))}
+        </nav>
 
-          <div className="rk-header-actions">
-            <a className="rk-phone" href="tel:+18008217770" aria-label="Call RK Logistics at (800) 821-7770"><PhoneIcon />(800) 821-7770</a>
-            <a className="rk-quote-button" href={`${corporateRoot}/contact.html`}>Get a Quote</a>
-            <div className="rk-customer-login"><NavigationGroup group={customerLogin} /></div>
-            <button className="rk-menu-button" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="rk-mobile-primary-nav" aria-label={open ? "Close menu" : "Open menu"}>
-              {open ? <Close size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+        <div className="rk-header-actions">
+          <a className="rk-phone" href="tel:+18008217770" aria-label="Call RK Logistics at (800) 821-7770"><PhoneIcon />(800) 821-7770</a>
+          <a className="rk-quote-button" href={`${corporateRoot}/contact.html`}>Get a Quote</a>
+          <div className="rk-customer-login"><NavigationGroup group={customerLogin} /></div>
+          <NavigationGroup group={services} className="rk-mobile-services" onNavigate={closeNavigation} />
+          <button
+            className="rk-menu-button"
+            type="button"
+            onClick={toggleNavigation}
+            aria-expanded={open}
+            aria-controls="rk-primary-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
+          >
+            {open ? <Close size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-      </header>
-
-      {open && (
-        <div className="rk-mobile-menu" id="rk-mobile-primary-nav">
-          <nav aria-label="RK Logistics mobile navigation">
-            <NavigationGroup group={whatWeDo} onNavigate={() => setOpen(false)} />
-            <NavigationGroup group={services} onNavigate={() => setOpen(false)} />
-            <NavigationGroup group={about} onNavigate={() => setOpen(false)} />
-            {directLinks.map((link) => <CorporateLink key={link.label} link={link} onNavigate={() => setOpen(false)} />)}
-            {customerLogin.links.map((link) => <CorporateLink key={link.label} link={link} onNavigate={() => setOpen(false)} />)}
-          </nav>
-        </div>
-      )}
-    </>
+      </div>
+    </header>
   );
 }
