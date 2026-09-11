@@ -52,53 +52,69 @@ export default function Home() {
           </div>
           <div className="hero-scrim" aria-hidden="true" />
           <div className="hero-content site-container">
-            <p className="hero-eyebrow">RK Logistics Group · Kyle, Texas</p>
-            <h1 id="hero-title">Vista<br />Ridge</h1>
+            <p className="hero-eyebrow">RK-operated logistics at Vista Ridge · Kyle, Texas</p>
+            <h1 id="hero-title">Managed logistics for Central Texas manufacturers.</h1>
             <p className="hero-copy">{property.headline}</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#tour">Request a Tour <ArrowUpRight /></a>
-              <a className="button button-ghost" href="#facility">Explore the Facility <ArrowRight /></a>
+              <a className="button button-ghost" href="#overview">See How RK Operates <ArrowRight /></a>
             </div>
           </div>
           <div className="hero-status">
             <span className="status-dot" aria-hidden="true" />
-            <div><strong>Tours available</strong><span>Qualified inquiries welcomed</span></div>
+            <div><strong>RK-operated logistics</strong><span>Facility tours and solution reviews available</span></div>
           </div>
-          <a className="scroll-cue" href="#overview"><span>Scroll to explore</span><i aria-hidden="true" /></a>
+          <a className="scroll-cue" href="#overview"><span>See the service model</span><i aria-hidden="true" /></a>
         </section>
 
         <section className="overview-section" id="overview" aria-labelledby="overview-title">
           <div className="site-container overview-heading">
             <Reveal>
-              <div className="section-kicker"><span>01</span><p>At a glance</p></div>
+              <div className="section-kicker"><span>01</span><p>RK at Vista Ridge</p></div>
               <div className="overview-title-row">
-                <h2 id="overview-title">Scale where it matters.<br /><em>Control where it counts.</em></h2>
+                <h2 id="overview-title">More than space.<br /><em>A managed operation.</em></h2>
                 <p>{property.summary}</p>
               </div>
             </Reveal>
           </div>
-          <div className="stats-rail site-container" role="list" aria-label="Key facility facts">
-            {property.stats.map((stat, index) => (
-              <Reveal key={stat.label} delay={index * 80} className="stat-reveal">
-                <div className="stat" role="listitem">
-                  <p><strong>{stat.value}</strong><span>{stat.unit}</span></p>
-                  <span className="stat-label">{stat.label}</span>
-                </div>
+          <div className="service-model-grid site-container" role="list" aria-label="RK operating model at Vista Ridge">
+            {property.operatingModel.map((item, index) => (
+              <Reveal key={item.step} delay={index * 80} className="service-model-reveal">
+                <article className="service-model-item" role="listitem">
+                  <span className="service-model-index">{item.step}</span>
+                  <p className="service-model-eyebrow">{item.eyebrow}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                </article>
               </Reveal>
             ))}
+          </div>
+          <div className="service-model-footer site-container">
+            <p>{property.operatingModelNote}</p>
+            <a className="text-link" href="#facility">See the operating environment <ArrowRight size={17} /></a>
           </div>
         </section>
 
         <section className="facility-section" id="facility" aria-labelledby="facility-title">
           <div className="site-container facility-intro">
             <Reveal>
-              <div className="section-kicker dark"><span>02</span><p>The facility</p></div>
-              <h2 id="facility-title">Built for operations<br />that cannot compromise.</h2>
+              <div className="section-kicker dark"><span>02</span><p>The operating environment</p></div>
+              <h2 id="facility-title">The infrastructure<br />behind the service.</h2>
             </Reveal>
             <Reveal delay={100} className="facility-intro-copy">
-              <p>Vista Ridge pairs a substantial industrial footprint with the specialized environments and infrastructure required by high-value, high-control operations.</p>
-              <a className="text-link" href="#tour">Discuss your requirements <ArrowUpRight size={17} /></a>
+              <p>Each feature matters because of the workflow it can enable. Vista Ridge gives RK a substantial, specialized environment for programs requiring scale, environmental control, cold storage, heavy power or hazardous-material fit review.</p>
+              <a className="text-link" href="#tour">Discuss your operation <ArrowUpRight size={17} /></a>
             </Reveal>
+          </div>
+          <div className="stats-rail facility-stats site-container" role="list" aria-label="Key Vista Ridge facility facts">
+            {property.stats.map((stat, index) => (
+              <Reveal key={stat.label} delay={index * 80} className="stat-reveal">
+                <div className="stat" role="listitem">
+                  <p><strong>{stat.value}</strong>{stat.unit && <span>{stat.unit}</span>}</p>
+                  <span className="stat-label">{stat.label}</span>
+                </div>
+              </Reveal>
+            ))}
           </div>
           <div className="capability-list site-container">
             {property.capabilities.map((item, index) => {
@@ -125,9 +141,9 @@ export default function Home() {
           </div>
           <div className="controlled-content">
             <Reveal>
-              <p className="section-label">Environmental control</p>
-              <h2 id="controlled-title">A controlled environment inside a full-scale facility.</h2>
-              <p className="section-lede">A dedicated 60,000-square-foot area is separated by a firewall, insulated, and fully HVAC-controlled for temperature and humidity.</p>
+              <p className="section-label">Controlled warehousing</p>
+              <h2 id="controlled-title">Coordinate qualified storage within one controlled environment.</h2>
+              <p className="section-lede">A dedicated 60,000-square-foot area is separated by a firewall, insulated and fully HVAC-controlled for temperature and humidity.</p>
               <div className="controlled-proof">
                 <div><strong>60,000</strong><span>SF climate-controlled</span></div>
                 <div><strong>360</strong><span>SF walk-in cold storage</span></div>
@@ -140,24 +156,24 @@ export default function Home() {
         <section className="specialty-section" aria-labelledby="specialty-title">
           <div className="site-container specialty-grid">
             <Reveal>
-              <div className="section-kicker"><span>03</span><p>Specialized capacity</p></div>
-              <h2 id="specialty-title">Infrastructure for more demanding work.</h2>
+              <div className="section-kicker"><span>03</span><p>Workflow-ready infrastructure</p></div>
+              <h2 id="specialty-title">Bring specialized work closer to the inventory.</h2>
             </Reveal>
             <div className="specialty-cards">
               <Reveal delay={80}>
                 <article className="specialty-card specialty-card-workroom">
                   <span className="card-number">01</span><Thermometer size={30} />
                   <p className="card-value">3,250 <small>SF</small></p>
-                  <h3>Dedicated temperature-controlled workroom</h3>
-                  <p>A dedicated, temperature-controlled workroom for controlled workflows, evaluation and support.</p>
+                  <h3>A controlled environment for approved workflows</h3>
+                  <p>The dedicated workroom can support approved evaluation, technical activity and other qualified workflows on site, subject to operational fit.</p>
                 </article>
               </Reveal>
               <Reveal delay={140}>
                 <article className="specialty-card specialty-card-power">
                   <span className="card-number">02</span><Bolt size={30} />
                   <p className="card-value">16 <small>× 480V</small></p>
-                  <h3>Internal power outlets</h3>
-                  <p>Heavy power distributed inside the building for flexible industrial equipment needs.</p>
+                  <h3>Power for equipment-intensive operations</h3>
+                  <p>Internal 480V outlets give the operating design flexibility to support qualified industrial equipment requirements.</p>
                 </article>
               </Reveal>
             </div>
@@ -202,9 +218,9 @@ export default function Home() {
           <div className="film-overlay" aria-hidden="true" />
           <div className="film-content site-container">
             <Reveal>
-              <p className="section-label">The property in motion</p>
-              <h2 id="film-title">See the scale.<br />Picture the operation.</h2>
-              <p>Real exterior views from Vista Ridge, prepared from the executive-authorized property footage.</p>
+              <p className="section-label">The operating platform in motion</p>
+              <h2 id="film-title">See the site.<br />Picture the workflow.</h2>
+              <p>Real exterior views of the Vista Ridge environment where RK can configure a qualified operating program.</p>
             </Reveal>
           </div>
         </section>
@@ -212,8 +228,8 @@ export default function Home() {
         <section className="gallery-section" id="gallery" aria-labelledby="gallery-title">
           <div className="site-container gallery-heading">
             <Reveal>
-              <div className="section-kicker"><span>05</span><p>Property gallery</p></div>
-              <div className="gallery-title-row"><h2 id="gallery-title">A facility you can understand before you arrive.</h2><p>Exterior access, warehouse volume, loading infrastructure and support space, shown through real property imagery.</p></div>
+              <div className="section-kicker"><span>05</span><p>Visual proof</p></div>
+              <div className="gallery-title-row"><h2 id="gallery-title">Understand the operating environment before you arrive.</h2><p>Exterior access, warehouse volume, loading infrastructure and support space, shown through real Vista Ridge imagery.</p></div>
             </Reveal>
           </div>
           <GalleryCarousel />
@@ -241,17 +257,17 @@ export default function Home() {
             <Reveal className="rk-brand-intro">
               <p className="section-label">RK Logistics Group</p>
               <Image src="/brand/rk-logo.png" alt="RK Logistics Group" width={548} height={138} />
-              <p>National capability. Local execution.</p>
+              <p>The operator behind Vista Ridge.</p>
             </Reveal>
             <Reveal delay={100} className="rk-copy">
-              <h2 id="rk-title">Logistics expertise behind the space.</h2>
-              <p>RK supports demanding supply chains with secured storage and staging, optimized site layouts, material handling, kitting, packing, crating, light assembly and shipping services.</p>
+              <h2 id="rk-title">A logistics operator, not simply available space.</h2>
+              <p>RK configures integrated 3PL programs around the customer’s manufacturing rhythm, combining managed warehousing, inventory control, value-added work and coordinated transportation through one operating relationship.</p>
               <div className="rk-proof-row" aria-label="RK Logistics company facts">
-                <div><strong>35+</strong><span>Years in logistics</span></div>
-                <div><strong>17</strong><span>Warehouse sites</span></div>
-                <div><strong>500+</strong><span>Team members</span></div>
+                <div><strong>3+</strong><span>Decades of experience</span></div>
+                <div><strong>16</strong><span>Facilities</span></div>
+                <div><strong>6</strong><span>U.S. states</span></div>
               </div>
-              <a className="text-link" href="https://rklogisticsgroup.com/warehousing/" target="_blank" rel="noreferrer">Explore RK Logistics <ArrowUpRight size={17} /></a>
+              <a className="text-link" href="https://www.rklogisticsgroup.com/what-we-do.html" target="_blank" rel="noreferrer">Explore RK’s integrated services <ArrowUpRight size={17} /></a>
             </Reveal>
           </div>
         </section>
@@ -259,13 +275,13 @@ export default function Home() {
         <section className="tour-section" id="tour" aria-labelledby="tour-title">
           <div className="site-container tour-grid">
             <Reveal className="tour-intro">
-              <div className="section-kicker"><span>07</span><p>Request a tour</p></div>
-              <h2 id="tour-title">Let’s talk about your operation.</h2>
-              <p>Tell RK Logistics what you are solving for. The team will review your requirements and coordinate a qualified property conversation.</p>
+              <div className="section-kicker"><span>07</span><p>Site + solution review</p></div>
+              <h2 id="tour-title">Bring RK the operation. Then tour the fit.</h2>
+              <p>Tell RK what you are receiving, storing, preparing and delivering. The team can assess service scope and facility fit, then coordinate a qualified tour.</p>
               <div className="tour-trust">
-                <div><Checkmark />Direct review by RK Logistics</div>
-                <div><Checkmark />Lease and operated-capacity paths</div>
-                <div><Checkmark />Confidential property conversation</div>
+                <div><Checkmark />RK-operated solution review</div>
+                <div><Checkmark />Service and facility fit considered together</div>
+                <div><Checkmark />Direct conversation with RK Logistics</div>
               </div>
             </Reveal>
             <Reveal delay={100}><TourRequestForm /></Reveal>

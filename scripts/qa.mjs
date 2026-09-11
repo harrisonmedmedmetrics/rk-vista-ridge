@@ -64,7 +64,9 @@ async function audit(name, viewport) {
     return {
       title: document.title,
       h1: document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim(),
+      heroActionsBottom: Math.round(document.querySelector(".hero-actions")?.getBoundingClientRect().bottom || 0),
       sectionCount: document.querySelectorAll("main section").length,
+      serviceModelItems: [...document.querySelectorAll(".service-model-item h3")].map(item => item.textContent?.replace(/\s+/g, " ").trim()),
       specificationEntries: [...document.querySelectorAll(".specification-list div")].map(item => ({
         label: item.querySelector("dt")?.textContent?.replace(/\s+/g, " ").trim(),
         value: item.querySelector("dd")?.textContent?.replace(/\s+/g, " ").trim(),
@@ -109,7 +111,7 @@ async function audit(name, viewport) {
 
   const screenshotSections = name === "mobile"
     ? ["top", "overview", "specialty", "specifications", "gallery", "location", "rk", "tour", "footer"]
-    : ["top", "facility", "controlled", "specialty", "specifications", "film", "gallery", "location", "rk", "tour", "footer"];
+    : ["top", "overview", "facility", "controlled", "specialty", "specifications", "film", "gallery", "location", "rk", "tour", "footer"];
   for (const key of screenshotSections) {
     const selector = {
       top: "#top",
@@ -128,7 +130,7 @@ async function audit(name, viewport) {
   }
 
   report.viewports[name] = { viewport, facts, axe, consoleErrors, pageErrors, requestFailures };
-  if (facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || facts.specificationEntries.length !== 6 || facts.specificationEntries.some(item => !item.label || !item.value) || (facts.specialtyGap !== null && facts.specialtyGap < 24) || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
+  if (facts.h1 !== "Managed logistics for Central Texas manufacturers." || facts.heroActionsBottom > viewport.height || facts.serviceModelItems.length !== 4 || facts.serviceModelItems.some(item => !item) || facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || facts.specificationEntries.length !== 6 || facts.specificationEntries.some(item => !item.label || !item.value) || (facts.specialtyGap !== null && facts.specialtyGap < 24) || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
   await context.close();
 }
 
@@ -139,6 +141,7 @@ function labelsMissing(labels) {
 await audit("desktop", { width: 1440, height: 900 });
 await audit("mobile", { width: 390, height: 844 });
 await audit("tablet", { width: 1024, height: 768 });
+await audit("compact", { width: 1280, height: 720 });
 await audit("laptop", { width: 1180, height: 820 });
 await audit("wide", { width: 1920, height: 1080 });
 await audit("ultrawide", { width: 2560, height: 1440 });

@@ -12,7 +12,7 @@ export function FacilitySpecifications() {
           <div className="section-kicker"><span>04</span><p>{profile.eyebrow}</p></div>
           <h2 id="specifications-title">{profile.title}</h2>
           <p>{profile.copy}</p>
-          <a className="text-link" href="#tour">Discuss your technical requirements <ArrowUpRight size={17} /></a>
+          <a className="text-link" href="#tour">Discuss your operating requirements <ArrowUpRight size={17} /></a>
         </Reveal>
         <Reveal delay={100}>
           <dl className="specification-list" aria-label="Vista Ridge technical profile">
@@ -24,7 +24,7 @@ export function FacilitySpecifications() {
             ))}
           </dl>
           <p className="specification-note">{profile.note}</p>
-          <p className="specification-request">Need clear height, column or bay spacing, layout, or permitted-use context? Include it in your request and RK will coordinate the appropriate property review.</p>
+          <p className="specification-request">Need clear height, column or bay spacing, layout, or permitted-use context? Include it in your request so RK can consider the physical and operating fit together.</p>
         </Reveal>
       </div>
     </section>

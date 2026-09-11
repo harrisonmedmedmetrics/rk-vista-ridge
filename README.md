@@ -1,14 +1,16 @@
 # Vista Ridge by RK Logistics Group
 
-Premium, property-specific industrial leasing experience for Vista Ridge in Kyle, Texas.
+Service-led, property-specific review experience for RK-operated logistics at Vista Ridge in Kyle, Texas.
 
 - Live review: https://rk-vista-ridge.vercel.app
 - Repository: https://github.com/harrisonmedmedmetrics/rk-vista-ridge
 
 ## V1 scope
 
+- Service-led hero and RK operating-model narrative
+- Site-specific receiving, inventory-control, fulfillment and delivery story grounded in RK's public Austin-area materials
+- Executive-approved facility facts positioned as proof for the operating model
 - Cinematic real-property hero and exterior film
-- Executive-approved facility facts and specialized capability story
 - Climate-controlled, temperature-controlled workroom, power and H4-readiness sections
 - Twelve-image documentary property gallery with lightbox
 - Regional Kyle / I-35 location context

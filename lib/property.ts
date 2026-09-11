@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Vista Ridge | RK Logistics Group",
   shortName: "Vista Ridge",
   description:
-    "A 208,010-square-foot specialized industrial facility in Kyle, Texas, with climate-controlled capacity, heavy power, a dedicated temperature-controlled workroom and tour availability.",
+    "RK-operated warehousing, inventory control, fulfillment and dedicated delivery from a specialized industrial facility in Kyle, Texas.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://rk-vista-ridge.vercel.app",
   tourEmail: process.env.TOUR_REQUEST_EMAIL || "info@rklogisticsgroup.com",
   corporateUrl: "https://rklogisticsgroup.com",
@@ -12,24 +12,57 @@ export const siteConfig = {
 
 export const property = {
   id: "vista-ridge",
-  pageVersion: "2026-09-02-james-review",
+  pageVersion: "2026-09-11-service-led-review",
   name: "Vista Ridge",
   market: "Kyle, Texas",
   corridor: "Texas Innovation Corridor",
-  headline: "Specialized industrial capacity, built for exacting operations.",
+  headline:
+    "At Vista Ridge, RK supports receiving, inventory control, staging, fulfillment and dedicated delivery from one Central Texas site.",
   summary:
-    "A 208,010-square-foot facility combining substantial warehouse scale with controlled environments, heavy power and specialized support space in the I-35 corridor between Austin and San Antonio.",
+    "The value is not the building alone. It is the program RK can configure inside it: inbound flow, inventory control, order activity and delivery aligned to each customer operation.",
   primaryCta: "Request a Tour",
   stats: [
     { value: "208,010", unit: "SF", label: "Total facility" },
+    { value: "71", unit: "", label: "Dock doors" },
     { value: "60,000", unit: "SF", label: "Climate-controlled" },
     { value: "3,250", unit: "SF", label: "Dedicated workroom" },
-    { value: "16", unit: "× 480V", label: "Internal power outlets" },
   ],
+  operatingModel: [
+    {
+      step: "01",
+      eyebrow: "Inbound operations",
+      title: "Receive and put away product",
+      copy:
+        "RK teams support product receipt, put-away and coordinated inbound flow for manufacturing and industrial inventory.",
+    },
+    {
+      step: "02",
+      eyebrow: "Inventory control",
+      title: "Control and stage inventory",
+      copy:
+        "RK controls and stages inventory around the requirements of each qualified customer program.",
+    },
+    {
+      step: "03",
+      eyebrow: "Order execution",
+      title: "Manage orders and fulfillment",
+      copy:
+        "RK can manage orders, fulfillment and approved value-added services within the same operating environment.",
+    },
+    {
+      step: "04",
+      eyebrow: "Outbound coordination",
+      title: "Deliver to local operations",
+      copy:
+        "Dedicated and expedited delivery can connect Vista Ridge inventory to manufacturing sites across the Austin area.",
+    },
+  ],
+  operatingModelNote:
+    "Program scope, service requirements and facility fit are confirmed with RK Logistics for each prospective operation.",
   technicalProfile: {
-    eyebrow: "Facility profile",
-    title: "A clear profile for an initial fit check.",
-    copy: "A concise view of the physical infrastructure at Vista Ridge, built for preliminary operational evaluation before a property conversation.",
+    eyebrow: "Facility proof",
+    title: "The physical profile behind the operating story.",
+    copy: "Use these verified review-stage facts for an initial fit check, then confirm layout, use, infrastructure and commercial requirements directly with RK.",
     specifications: [
       { label: "Total facility", value: "208,010 SF" },
       { label: "Dock doors", value: "71" },
@@ -42,41 +75,41 @@ export const property = {
   },
   capabilities: [
     {
-      eyebrow: "Controlled environment",
-      title: "60,000 SF under precise environmental control",
+      eyebrow: "Controlled warehousing",
+      title: "Support qualified controlled-storage needs in a dedicated environment",
       copy:
-        "A firewall-separated, insulated area with full HVAC control for temperature and humidity, designed for operations where environmental consistency matters.",
+        "A 60,000-square-foot, firewall-separated and insulated area provides full HVAC control for temperature and humidity where environmental consistency matters.",
     },
     {
-      eyebrow: "Integrated cold storage",
-      title: "Permanent walk-in refrigerator / freezer",
+      eyebrow: "On-site cold-storage infrastructure",
+      title: "Keep refrigerated and frozen storage inside the operation",
       copy:
-        "A dedicated 360-square-foot walk-in refrigerator and freezer is installed within the climate-controlled footprint.",
+        "A dedicated 360-square-foot walk-in refrigerator and freezer sits within the climate-controlled footprint, keeping cold-storage capacity close to the managed workflow.",
     },
     {
-      eyebrow: "Dedicated workroom",
-      title: "Temperature-controlled workroom on site",
+      eyebrow: "Controlled workflow support",
+      title: "Bring specialized work closer to inventory",
       copy:
-        "A 3,250-square-foot dedicated, temperature-controlled workroom supports controlled workflows, evaluation and technical support.",
+        "A 3,250-square-foot dedicated, temperature-controlled workroom can support approved controlled workflows, evaluation and technical activity on site.",
     },
     {
-      eyebrow: "Power infrastructure",
-      title: "Heavy power where the work happens",
+      eyebrow: "Equipment-ready operations",
+      title: "Position demanding equipment where the work happens",
       copy:
-        "Sixteen internal 480V outlets support demanding equipment and flexible industrial operating requirements across the building.",
+        "Sixteen internal 480V outlets provide flexibility for qualified equipment-intensive and industrial operating requirements.",
     },
     {
-      eyebrow: "Hazardous-material storage",
-      title: "Current H4 storage approval",
+      eyebrow: "Hazardous-material fit",
+      title: "Evaluate the material profile before the program begins",
       copy:
-        "The facility's current storage profile reflects toxic and corrosive classifications stored on site; proposed uses require fit confirmation.",
+        "The facility's current H4 storage profile reflects toxic and corrosive classifications stored on site. Every proposed use requires fit confirmation.",
     },
   ],
   h4: {
     eyebrow: "Hazardous-material readiness",
-    title: "Built for operations that cannot compromise.",
+    title: "Start with the material profile. Confirm the operational fit.",
     copy:
-      "The facility currently holds H4 storage approval based on toxic and corrosive classifications stored on site.",
+      "Vista Ridge currently holds H4 storage approval based on toxic and corrosive classifications stored on site. That existing profile is a starting point, not a blanket approval for every material or program.",
     details: [
       {
         label: "Current storage approval",

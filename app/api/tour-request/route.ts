@@ -26,12 +26,12 @@ function allowed(request: Request) {
 
 function buildMailto(data: TourRequest, requestId: string) {
   const interest = {
-    lease: "Lease / sublease space",
-    "operated-logistics": "RK-operated logistics capacity",
-    unsure: "Not sure yet",
+    lease: "Facility space / lease discussion",
+    "operated-logistics": "RK-operated warehousing and logistics",
+    unsure: "Not sure, needs a fit review",
   }[data.interest];
   const body = [
-    "Vista Ridge tour request",
+    "Vista Ridge site and solution request",
     "",
     `Request reference: ${requestId}`,
     `Name: ${data.name}`,
@@ -47,7 +47,7 @@ function buildMailto(data: TourRequest, requestId: string) {
     "",
     `Attribution: source=${data.source || "direct"}; medium=${data.medium || "website"}; campaign=${data.campaign || "none"}; term=${data.term || "none"}; content=${data.content || "none"}; click_id=${data.clickId || "none"}`,
   ].join("\n");
-  return `mailto:${encodeURIComponent(siteConfig.tourEmail)}?subject=${encodeURIComponent("Vista Ridge — request a tour")}&body=${encodeURIComponent(body)}`;
+  return `mailto:${encodeURIComponent(siteConfig.tourEmail)}?subject=${encodeURIComponent("Vista Ridge site and solution request")}&body=${encodeURIComponent(body)}`;
 }
 
 export async function POST(request: Request) {

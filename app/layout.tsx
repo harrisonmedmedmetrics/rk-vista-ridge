@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-rk", display: "swap"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: "Vista Ridge | Specialized Industrial Space in Kyle, Texas",
+  title: "Vista Ridge | Managed 3PL Operations in Kyle, Texas",
   description: siteConfig.description,
   applicationName: "Vista Ridge by RK Logistics Group",
   robots: siteConfig.indexable ? { index: true, follow: true } : { index: false, follow: false, nocache: true },
@@ -16,14 +16,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    title: "Vista Ridge | RK Logistics Group",
+    title: "Vista Ridge | Managed 3PL Operations by RK Logistics",
     description: siteConfig.description,
     siteName: "Vista Ridge",
-    images: [{ url: "/media/vista-ridge-og.jpg", width: 1200, height: 630, alt: "Vista Ridge industrial facility" }],
+    images: [{ url: "/media/vista-ridge-og.jpg", width: 1200, height: 630, alt: "RK Logistics' Vista Ridge operation in Kyle, Texas" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vista Ridge | RK Logistics Group",
+    title: "Vista Ridge | Managed 3PL Operations by RK Logistics",
     description: siteConfig.description,
     images: ["/media/vista-ridge-og.jpg"],
   },

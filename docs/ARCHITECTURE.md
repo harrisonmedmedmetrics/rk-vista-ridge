@@ -2,11 +2,11 @@
 
 ## Product shape
 
-Vista Ridge V1 is a single-property leasing experience implemented as a Next.js App Router application. The component and data boundaries are designed so additional RK properties can later use the same shell without duplicating page logic.
+Vista Ridge V1 is a service-led, single-property logistics experience implemented as a Next.js App Router application. It presents the RK operating model first and the facility as supporting proof. The component and data boundaries are designed so additional approved RK properties can later use the same shell without duplicating page logic.
 
 ## Main layers
 
-- `lib/property.ts`: versioned public property data, capability copy, gallery, location context and inquiry defaults.
+- `lib/property.ts`: versioned operating-model copy, public property data, capability proof, gallery, location context and inquiry defaults.
 - `app/page.tsx`: semantic property-page composition.
 - `components/`: reusable navigation, media, gallery, reveal and inquiry components.
 - `app/api/tour-request/route.ts`: validated tour-request boundary with optional webhook delivery and RK email fallback.

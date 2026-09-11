@@ -61,12 +61,12 @@ export function TourRequestForm() {
         <label className="form-span-2"><span>What are you exploring? *</span>
           <select name="interest" required defaultValue="">
             <option value="" disabled>Select one</option>
-            <option value="lease">Lease / sublease space</option>
-            <option value="operated-logistics">RK-operated logistics capacity</option>
-            <option value="unsure">Not sure yet</option>
+            <option value="operated-logistics">RK-operated warehousing and logistics</option>
+            <option value="lease">Facility space / lease discussion</option>
+            <option value="unsure">Not sure, I need a fit review</option>
           </select>
         </label>
-        <label><span>Approximate space need</span><input name="spaceNeed" placeholder="e.g. 50,000 SF" maxLength={80} /></label>
+        <label><span>Inventory or space need</span><input name="spaceNeed" placeholder="e.g. pallets, units or SF" maxLength={80} /></label>
         <label><span>Timing</span><input name="timeline" placeholder="e.g. Q1 2027" maxLength={80} /></label>
         <label className="form-span-2"><span>Tell us about your operation</span><textarea name="message" rows={5} maxLength={1500} /></label>
       </div>
@@ -79,7 +79,7 @@ export function TourRequestForm() {
         <button className="button button-primary form-submit" type="submit" disabled={status === "submitting"}>
           {status === "submitting" ? "Preparing request…" : "Request a Tour"}<ArrowUpRight />
         </button>
-        <p>Qualified tour requests are reviewed directly by RK Logistics.</p>
+        <p>Qualified site and solution requests are reviewed directly by RK Logistics.</p>
       </div>
       {status !== "idle" && (
         <div className={`form-status ${status}`} role="status" aria-live="polite">
