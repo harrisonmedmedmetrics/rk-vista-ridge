@@ -61,12 +61,39 @@ async function audit(name, viewport) {
     }));
     const video = document.querySelector("video");
     const nav = performance.getEntriesByType("navigation")[0];
+    const elementTop = (element) => element?.getBoundingClientRect().top ?? 0;
+    const textTop = (element) => {
+      if (!element) return 0;
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      return range.getBoundingClientRect().top;
+    };
+    const relativeTop = (element, parent) => elementTop(element) - elementTop(parent);
+    const spread = (values) => values.length ? Math.max(...values) - Math.min(...values) : 0;
+    const serviceCards = [...document.querySelectorAll(".service-model-item")];
+    const capabilityRows = [...document.querySelectorAll(".capability-row")];
+    const thirdFacilityStat = document.querySelector(".facility-stats .stat-reveal:nth-child(3)");
+    const sourceIcon = document.querySelector(".source-link svg");
+    const formatting = {
+      overviewTopDelta: Math.round(elementTop(document.querySelector(".overview-title-row > p")) - elementTop(document.querySelector("#overview-title"))),
+      facilityTopDelta: Math.round(elementTop(document.querySelector(".facility-intro-copy > p")) - elementTop(document.querySelector("#facility-title"))),
+      galleryTopDelta: Math.round(elementTop(document.querySelector(".gallery-title-row > p")) - elementTop(document.querySelector("#gallery-title"))),
+      rkTopDelta: Math.round(elementTop(document.querySelector(".rk-copy")) - elementTop(document.querySelector(".rk-brand-intro"))),
+      serviceTitleOffsetSpread: Math.round(spread(serviceCards.map(card => relativeTop(card.querySelector("h3"), card)))),
+      capabilityTitleCopyMaxDelta: Math.round(Math.max(0, ...capabilityRows.map(row => Math.abs(textTop(row.querySelector("h3")) - textTop(row.querySelector(":scope > p")))))),
+      sourceIconMarginBottom: sourceIcon ? getComputedStyle(sourceIcon).marginBottom : null,
+      locationKickerUsesDarkStyle: document.querySelector(".location-content .section-kicker")?.classList.contains("dark") ?? true,
+      rkExperienceValue: document.querySelector(".rk-proof-row > div:first-child strong")?.textContent?.trim(),
+      rkExperienceLabel: document.querySelector(".rk-proof-row > div:first-child span")?.textContent?.trim(),
+      facilityStatDividerColor: thirdFacilityStat ? getComputedStyle(thirdFacilityStat).borderTopColor : null,
+    };
     return {
       title: document.title,
       h1: document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim(),
       heroActionsBottom: Math.round(document.querySelector(".hero-actions")?.getBoundingClientRect().bottom || 0),
       sectionCount: document.querySelectorAll("main section").length,
       serviceModelItems: [...document.querySelectorAll(".service-model-item h3")].map(item => item.textContent?.replace(/\s+/g, " ").trim()),
+      formatting,
       specificationEntries: [...document.querySelectorAll(".specification-list div")].map(item => ({
         label: item.querySelector("dt")?.textContent?.replace(/\s+/g, " ").trim(),
         value: item.querySelector("dd")?.textContent?.replace(/\s+/g, " ").trim(),
@@ -129,8 +156,20 @@ async function audit(name, viewport) {
     }
   }
 
+  const formattingFailed =
+    facts.formatting.serviceTitleOffsetSpread > 2 ||
+    facts.formatting.sourceIconMarginBottom !== "0px" ||
+    facts.formatting.locationKickerUsesDarkStyle ||
+    facts.formatting.rkExperienceValue !== "Over 30" ||
+    facts.formatting.rkExperienceLabel !== "Years of experience" ||
+    (viewport.width > 800 && Math.abs(facts.formatting.overviewTopDelta) > 2) ||
+    (viewport.width > 1080 && Math.abs(facts.formatting.facilityTopDelta) > 2) ||
+    (viewport.width > 800 && Math.abs(facts.formatting.galleryTopDelta) > 2) ||
+    (viewport.width > 800 && Math.abs(facts.formatting.rkTopDelta) > 2) ||
+    (viewport.width > 800 && facts.formatting.capabilityTitleCopyMaxDelta > 5) ||
+    (viewport.width <= 800 && !facts.formatting.facilityStatDividerColor?.includes("255, 255, 255"));
   report.viewports[name] = { viewport, facts, axe, consoleErrors, pageErrors, requestFailures };
-  if (facts.h1 !== "Managed logistics for Central Texas manufacturers." || facts.heroActionsBottom > viewport.height || facts.serviceModelItems.length !== 4 || facts.serviceModelItems.some(item => !item) || facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || facts.specificationEntries.length !== 6 || facts.specificationEntries.some(item => !item.label || !item.value) || (facts.specialtyGap !== null && facts.specialtyGap < 24) || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
+  if (formattingFailed || facts.h1 !== "Managed logistics for Central Texas manufacturers." || facts.heroActionsBottom > viewport.height || facts.serviceModelItems.length !== 4 || facts.serviceModelItems.some(item => !item) || facts.brokenImages.length || facts.missingTargets.length || facts.upscaledImages.length || facts.specificationEntries.length !== 6 || facts.specificationEntries.some(item => !item.label || !item.value) || (facts.specialtyGap !== null && facts.specialtyGap < 24) || facts.scrollWidth > viewport.width + 1 || labelsMissing(facts.labels) || pageErrors.length || consoleErrors.length || axe.some(v => ["critical", "serious"].includes(v.impact))) failed = true;
   await context.close();
 }
 

@@ -239,7 +239,7 @@ export default function Home() {
           <div className="location-map-wrap"><CorridorMap /></div>
           <div className="location-content">
             <Reveal>
-              <div className="section-kicker dark"><span>06</span><p>Location</p></div>
+              <div className="section-kicker"><span>06</span><p>Location</p></div>
               <MapPin size={30} />
               <h2 id="location-title">{property.location.title}</h2>
               <p>{property.location.copy}</p>
@@ -263,7 +263,7 @@ export default function Home() {
               <h2 id="rk-title">A logistics operator, not simply available space.</h2>
               <p>RK configures integrated 3PL programs around the customer’s manufacturing rhythm, combining managed warehousing, inventory control, value-added work and coordinated transportation through one operating relationship.</p>
               <div className="rk-proof-row" aria-label="RK Logistics company facts">
-                <div><strong>3+</strong><span>Decades of experience</span></div>
+                <div><strong>Over 30</strong><span>Years of experience</span></div>
                 <div><strong>16</strong><span>Facilities</span></div>
                 <div><strong>6</strong><span>U.S. states</span></div>
               </div>
