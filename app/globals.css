@@ -171,10 +171,10 @@
   .stats-rail { display: grid; grid-template-columns: repeat(4,1fr); margin-top: clamp(4rem,7vw,7rem); }
   .stat-reveal { border-left: 1px solid var(--line); }
   .stat-reveal:last-child { border-right: 1px solid var(--line); }
-  .stat { min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; padding: .65rem clamp(1.3rem,2.5vw,2.7rem) 1rem; }
-  .stat p { display: flex; align-items: baseline; gap: .45rem; }
+  .stat { min-height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 1.35rem; padding: 1.25rem clamp(1.3rem,2.5vw,2.7rem); text-align: center; }
+  .stat p { display: flex; align-items: flex-start; justify-content: center; gap: .35rem; white-space: nowrap; }
   .stat strong { font-family: var(--font-display); font-size: clamp(2.2rem,4vw,4.1rem); letter-spacing: -.06em; line-height: 1; }
-  .stat p span { color: var(--green-ink); font-size: .72rem; font-weight: 800; letter-spacing: .05em; }
+  .stat p span { padding-top: .55rem; color: var(--green-ink); font-size: .72rem; font-weight: 800; letter-spacing: .05em; }
   .stat-label { color: var(--steel); font-size: .69rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 
   .facility-section { padding: var(--section) 0; background: var(--forest); color: white; }
@@ -470,7 +470,7 @@
     .stat-reveal:nth-child(3) { border-top: 1px solid var(--line); }
     .stat-reveal:nth-child(4) { border-top: 1px solid var(--line); border-right: 1px solid var(--line); }
     .facility-stats .stat-reveal:nth-child(3), .facility-stats .stat-reveal:nth-child(4) { border-top-color: var(--light-line); }
-    .stat { min-height: 135px; padding: 1rem; }
+    .stat { min-height: 112px; gap: 1rem; padding: 1rem; }
     .stat strong { font-size: clamp(2rem,9vw,3.3rem); }
     .capability-row { grid-template-columns: 34px 44px 1fr; gap: .8rem; padding: 1.6rem 0; }
     .capability-row > p { grid-column: 3; padding-top: 0; }
@@ -543,6 +543,7 @@
     .service-model-item { min-height: 0; padding: 1.75rem 0 2rem; }
     .service-model-eyebrow { margin-top: 2rem; }
     .stats-rail { padding-inline: 0; }
+    .facility-stats .stat strong { font-size: clamp(1.85rem,9vw,2.2rem); }
     .stat-reveal:first-child, .stat-reveal:nth-child(3) { border-left: 0; }
     .stat-reveal:nth-child(2), .stat-reveal:nth-child(4) { border-right: 0; }
     .gallery-grid { grid-auto-rows: 260px; }

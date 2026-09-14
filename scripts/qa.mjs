@@ -72,6 +72,21 @@ async function audit(name, viewport) {
     const spread = (values) => values.length ? Math.max(...values) - Math.min(...values) : 0;
     const serviceCards = [...document.querySelectorAll(".service-model-item")];
     const capabilityRows = [...document.querySelectorAll(".capability-row")];
+    const facilityStatCells = [...document.querySelectorAll(".facility-stats .stat")];
+    const facilityStatValueLabelGaps = facilityStatCells.map(cell => elementTop(cell.querySelector(".stat-label")) - (cell.querySelector(":scope > p")?.getBoundingClientRect().bottom ?? 0));
+    const facilityStatUnitOffsets = facilityStatCells.map(cell => {
+      const value = cell.querySelector("strong")?.getBoundingClientRect();
+      const unit = cell.querySelector(":scope > p > span")?.getBoundingClientRect();
+      return value && unit ? (unit.top - value.top) / value.height : 0;
+    }).filter(value => value > 0);
+    const facilityStatValueCenterDeltas = facilityStatCells.map(cell => {
+      const bounds = cell.getBoundingClientRect();
+      const value = cell.querySelector("strong")?.getBoundingClientRect();
+      const unit = cell.querySelector(":scope > p > span")?.getBoundingClientRect();
+      if (!value) return 0;
+      const groupCenter = (value.left + (unit?.right ?? value.right)) / 2;
+      return Math.abs(groupCenter - (bounds.left + bounds.right) / 2);
+    });
     const thirdFacilityStat = document.querySelector(".facility-stats .stat-reveal:nth-child(3)");
     const sourceIcon = document.querySelector(".source-link svg");
     const formatting = {
@@ -81,6 +96,10 @@ async function audit(name, viewport) {
       rkTopDelta: Math.round(elementTop(document.querySelector(".rk-copy")) - elementTop(document.querySelector(".rk-brand-intro"))),
       serviceTitleOffsetSpread: Math.round(spread(serviceCards.map(card => relativeTop(card.querySelector("h3"), card)))),
       capabilityTitleCopyMaxDelta: Math.round(Math.max(0, ...capabilityRows.map(row => Math.abs(textTop(row.querySelector("h3")) - textTop(row.querySelector(":scope > p")))))),
+      facilityStatMaxValueLabelGap: Math.round(Math.max(0, ...facilityStatValueLabelGaps)),
+      facilityStatValueLabelGapSpread: Math.round(spread(facilityStatValueLabelGaps)),
+      facilityStatMaxUnitOffsetRatio: Number(Math.max(0, ...facilityStatUnitOffsets).toFixed(2)),
+      facilityStatValueCenterMaxDelta: Math.round(Math.max(0, ...facilityStatValueCenterDeltas)),
       sourceIconMarginBottom: sourceIcon ? getComputedStyle(sourceIcon).marginBottom : null,
       locationKickerUsesDarkStyle: document.querySelector(".location-content .section-kicker")?.classList.contains("dark") ?? true,
       rkExperienceValue: document.querySelector(".rk-proof-row > div:first-child strong")?.textContent?.trim(),
@@ -158,6 +177,10 @@ async function audit(name, viewport) {
 
   const formattingFailed =
     facts.formatting.serviceTitleOffsetSpread > 2 ||
+    facts.formatting.facilityStatMaxValueLabelGap > 28 ||
+    facts.formatting.facilityStatValueLabelGapSpread > 2 ||
+    facts.formatting.facilityStatMaxUnitOffsetRatio > 0.36 ||
+    facts.formatting.facilityStatValueCenterMaxDelta > 2 ||
     facts.formatting.sourceIconMarginBottom !== "0px" ||
     facts.formatting.locationKickerUsesDarkStyle ||
     facts.formatting.rkExperienceValue !== "Over 30" ||
